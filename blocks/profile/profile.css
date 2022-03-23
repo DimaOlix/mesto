@@ -1,0 +1,28 @@
+.profile {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  grid-template-areas: 
+  'avatar name edit-button add-button'
+  'avatar activity .. add-button';
+  align-items: center;
+}
+
+@media all and (max-width: 585px){
+  .profile {
+    grid-template-areas: 
+    'avatar name edit-button'
+    'avatar activity .. '
+    'add-button add-button add-button';
+  }
+}
+
+@media all and (max-width: 320px){
+  .profile {
+    grid-template-areas: 
+    'avatar name edit-button'
+    'avatar activity .. '
+    'add-button add-button add-button';
+  }
+}
