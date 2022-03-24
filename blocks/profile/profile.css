@@ -3,6 +3,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto 1fr auto;
+  grid-template-rows: min-content min-content;
   grid-template-areas: 
   'avatar name edit-button add-button'
   'avatar activity .. add-button';
@@ -20,9 +21,14 @@
 
 @media all and (max-width: 320px){
   .profile {
+    position: relative;
+    padding-top: 39px;
+    grid-template-columns: 1fr auto;
     grid-template-areas: 
-    'avatar name edit-button'
-    'avatar activity .. '
-    'add-button add-button add-button';
+    'avatar'
+    'name'
+    'activity'
+    'add-button';
+    justify-items: center;
   }
 }

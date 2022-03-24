@@ -5,3 +5,9 @@
   border-radius: 50%;
   grid-area: avatar;
 }
+
+@media all and (max-width: 320px){
+  .profile__avatar {
+    margin: 0;
+  }
+}

@@ -1,7 +1,9 @@
 .profile__add-button {
   width: 150px;
   height: 50px;
-  background-image: url(../../../images/AddButton.svg);
+  background-image: url(../../../images/AddButton2.png);
+  background-size: contain;
+  background-repeat: no-repeat;
   grid-area: add-button;
 }
 
@@ -9,5 +11,11 @@
   .profile__add-button {
     margin-top: 20px;
     justify-self: center;
+  }
+}
+
+@media all and (max-width: 320px){
+  .profile__add-button {
+    width: 200px;
   }
 }
