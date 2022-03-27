@@ -1,0 +1,19 @@
+.elements__container {
+  max-width: 880px;
+  margin: 0 auto;
+  list-style-type: none;
+  box-sizing: border-box;
+  padding: 51px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  grid-template-rows: repeat(2, minmax(361px, 1fr));
+  gap: 17px;
+}
+
+@media all and (max-width: 320px){
+  .elements__container {
+    grid-template-columns: repeat(auto-fit, 282px);
+    justify-content: center;
+    gap: 20px;
+  }
+}

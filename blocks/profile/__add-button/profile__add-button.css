@@ -1,10 +1,15 @@
-.profile__edit-button {
+.profile__add-button {
   width: 150px;
   height: 50px;
-  background-image: url(../../../images/AddButton.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
+  padding: 0;
+  background: transparent url(../../../images/Vector.svg) center no-repeat;
+  border: 1px solid #fff;
   grid-area: add-button;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  opacity: .6;
 }
 
 @media all and (max-width: 585px){
@@ -16,6 +21,7 @@
 
 @media all and (max-width: 320px){
   .profile__add-button {
-    width: 200px;
+    width: 282px;
+    margin-top: 36px;
   }
 }

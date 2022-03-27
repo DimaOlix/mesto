@@ -1,6 +1,7 @@
 .profile {
   max-width: 880px;
   margin: 0 auto;
+  padding-top: 40px;
   display: grid;
   grid-template-columns: auto auto 1fr auto;
   grid-template-rows: min-content min-content;
@@ -12,10 +13,14 @@
 
 @media all and (max-width: 585px){
   .profile {
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(4, auto);
     grid-template-areas: 
-    'avatar name edit-button'
-    'avatar activity .. '
-    'add-button add-button add-button';
+    'avatar avatar'
+    'name edit-button'
+    'activity activity '
+    'add-button add-button';
+    justify-items: center;
   }
 }
 
@@ -29,6 +34,5 @@
     'name'
     'activity'
     'add-button';
-    justify-items: center;
   }
 }

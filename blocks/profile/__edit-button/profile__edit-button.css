@@ -6,17 +6,27 @@
   background-size: contain;
   grid-area: edit-button;
   justify-self: start;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  opacity: .6;
+}
+
+@media all and (max-width: 585px){
+  .profile__edit-button {
+    margin: 0;
+  }
 }
 
 @media all and (max-width: 320px){
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    margin: 0;
-    position: absolute;
-    grid-area: none;
-    bottom: 123px;
-    right: 38px;
-
+    margin-right: 35px;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    align-self: end;
   }
 }

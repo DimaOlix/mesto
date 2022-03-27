@@ -1,3 +1,16 @@
 .profile__activity {
+  font-size: 18px;
+  line-height: 1.22;
+  font-weight: 400;
+  margin: 0;
   grid-area: activity;
+  align-self: start;
+}
+
+@media all and (max-width: 320px){
+  .profile__activity {
+  font-size: 14px;
+  line-height: 1.21;
+  margin-top: 14px;
+  }
 }
