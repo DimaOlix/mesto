@@ -14,7 +14,7 @@
   opacity: .6;
 }
 
-@media all and (max-width: 470px) {
+@media all and (max-width: 540px) {
   .popup__close {
     top: -40px;
     right: 0;

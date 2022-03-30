@@ -5,7 +5,7 @@
   margin: 0 0 54px;
 }
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 380px) {
   .popup__title {
     font-weight: 900;
     font-size: 18px;

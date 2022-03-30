@@ -1,15 +1,13 @@
 .profile__avatar {
-  max-width: 127px;
+  max-width: 120px;
   margin-right: 30px;
   object-fit: cover;
   border-radius: 50%;
   grid-area: avatar;
 }
 
-@media all and (max-width: 320px){
+@media all and (max-width: 585px){
   .profile__avatar {
-    max-width: 120px;
-
     margin: 0;
   }
 }

@@ -13,13 +13,12 @@
 
 @media all and (max-width: 585px){
   .profile {
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: repeat(4, auto);
+    grid-template-columns: 1fr auto;
     grid-template-areas: 
-    'avatar avatar'
-    'name edit-button'
-    'activity activity '
-    'add-button add-button';
+    'avatar'
+    'name'
+    'activity'
+    'add-button';
     justify-items: center;
   }
 }

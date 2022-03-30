@@ -1,8 +1,11 @@
 .element__like {
   width: 22px;
   height: 19px;
+  padding: 0;
+  border: none;
+  justify-self: end;
   align-self: center;
-  background-image: url(../../../images/Group.svg);
+  background: transparent url(../../../images/Group.svg);
   cursor: pointer;
 }
 

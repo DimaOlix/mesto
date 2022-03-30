@@ -3,7 +3,8 @@
   height: 50px;
   padding: 0;
   background: transparent url(../../../images/Vector.svg) center no-repeat;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
   grid-area: add-button;
   cursor: pointer;
 }
@@ -23,5 +24,6 @@
   .profile__add-button {
     width: 282px;
     margin-top: 36px;
+    background-size: 16px 16px;
   }
 }
