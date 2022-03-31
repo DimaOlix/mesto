@@ -8,6 +8,12 @@
 
 @media all and (max-width: 585px){
   .profile__avatar {
+    margin: 0 0 30px;
+  }
+}
+
+@media all and (max-width: 400px){
+  .profile__avatar {
     margin: 0;
   }
 }
