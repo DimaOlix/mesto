@@ -10,11 +10,16 @@ let nameInput = formElement.querySelector('.form__input_value_name');
 let activityInput = formElement.querySelector('.form__input_value_activity');
 
 
-//функция добавления-удаления класса модификатора
-function openClosePopup() {
-  popupElement.classList.toggle('popup_opened');
+//функция открытия Popup
+function openPopup() {
+  popupElement.classList.add('popup_opened');
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
+}
+
+//Функция закрытия Popup
+function closePopup() {
+  popupElement.classList.remove('popup_opened');
 }
 
 //функция отключения отправки формы, добавления значений 
@@ -23,7 +28,7 @@ function formSubmitHandler (evt) {
   evt.preventDefault();
   nameAria.textContent = nameInput.value;
   activityAria.textContent = activityInput.value;
-  openClosePopup();
+  closePopup();
 }
 
 //закрытие попапа при клике вне его окна
@@ -35,8 +40,8 @@ function formSubmitHandler (evt) {
 
 
 //считываем клики
-buttonEdit.addEventListener('click', openClosePopup);
-formClose.addEventListener('click', openClosePopup);
+buttonEdit.addEventListener('click', openPopup);
+formClose.addEventListener('click', closePopup);
 
 // popupElement.addEventListener('click', clickOverleyPopup);
 

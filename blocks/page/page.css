@@ -3,5 +3,18 @@
   margin: 0 auto;
   background-color: #000;
   color: #fff;
-  font-family: 'Inter-Regular', 'Arial', 'Helvetica', 'sans-serif';
+  font-family: 'Inter', 'Arial', 'Helvetica', 'sans-serif';
 }
+
+@media all and (max-width: 950px) {
+  .page {
+    padding: 0 27px;
+  }
+}
+
+@media all and (max-width: 585px) {
+  .page {
+    padding: 0;
+  }
+}
+
