@@ -2,7 +2,7 @@
   margin: 45px 0 41px;
 }
 
-@media all and (max-width: 585px) {
+@media all and (max-width: 580px) {
   .header__logo {
     margin-left: 27px;
   }
