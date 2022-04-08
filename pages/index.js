@@ -1,27 +1,34 @@
 // создание переменных
-let nameAria = document.querySelector('.profile__name');
-let activityAria = document.querySelector('.profile__activity');
-let editButton = document.querySelector('.profile__edit-button');
-let addButton = document.querySelector('.profile__add-button');
 
-let popupElement = document.querySelector('.popup');
-let popupAddElement = document.querySelector('.popup_type_add');
+// переменные для кнопок и полей с информацией в profile
+const nameAria = document.querySelector('.profile__name');
+const activityAria = document.querySelector('.profile__activity');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
 
-let formElement = popupElement.querySelector('.form');
-let formClose = popupElement.querySelector('.popup__close');
-let nameInput = formElement.querySelector('.form__input_value_name');
-let activityInput = formElement.querySelector('.form__input_value_activity');
+// переменные для попап edit и add
+const popupEditElement = document.querySelector('.popup_type_edit');
+const popupAddElement = document.querySelector('.popup_type_add');
 
-let formAddElement = popupElement.querySelector('.add-form');
-let closeFormAdd = popupElement.querySelector('.popup__close_type_add');
-let placeInput = formElement.querySelector('.add-form__input_value_place');
-let linkInput = formElement.querySelector('.add-form__input_value_link');
+// переменные для формы edit
+const formEditElement = popupEditElement.querySelector('.form_type_edit');
+const formClose = popupEditElement.querySelector('.popup__close_type_edit');
+const nameInput = formEditElement.querySelector('.form__input_value_name');
+const activityInput = formEditElement.querySelector('.form__input_value_activity');
+
+// переменные для формы add
+const formAddElement = popupAddElement.querySelector('.form_type_add');
+const closeFormAdd = popupAddElement.querySelector('.popup__close_type_add');
+const placeInput = popupAddElement.querySelector('.form__input_value_place');
+const linkInput = popupAddElement.querySelector('.form__input_value_link');
 
 
 
-let elementCard = document.querySelectorAll('.element');
-let elementCardImage = document.querySelectorAll('.element__image');
-let elementCardTitle = document.querySelectorAll('.element__title');
+const сardСontainer = document.querySelector('.elements__container');
+const template = document.querySelector('.templateCard');
+
+const elementCardImage = document.querySelector('.element__image');
+const elementCardTitle = document.querySelector('.element__title');
 
 
 // массив для карточек при загрузке страницы
@@ -52,28 +59,34 @@ const initialCards = [
   }
 ];
 
+function getCards(elem) {
+  const newCard = template.content.cloneNode(true);
+  const cardImage = newCard.querySelector('.element__image');
+  const cardTitle = newCard.querySelector('.element__title');
+  
+  cardTitle.textContent = elem.name;
+  cardImage.src = elem.link;
 
-// elementCardImage.forEach(function(el) {
-//   for (i = 0; i <= initialCards.length; i += 1) {
-//     let elSrc = initialCards[i].link;
-//   }
-//   el.src = elSrc; 
-// });
+  return newCard;
+}
+
+function render() {
+  const html = initialCards.map(getCards);
+  сardСontainer.append(...html);
+}
+
+render();
 
 
 
-
-
-//функция открытия Popup Edit
-function openPopupEdit(popupElement) {
-  popupElement.classList.add('popup_opened');
-//   nameInput.value = nameAria.textContent;
-//   activityInput.value = activityAria.textContent;
+//функция открытия Popup
+function openPopupEdit(popupEditElement) {
+  popupEditElement.classList.add('popup_opened');
 }
 
 //Функция закрытия Popup
-function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
+function closePopup(popupEditElement) {
+  popupEditElement.classList.remove('popup_opened');
 }
 
 
@@ -84,7 +97,7 @@ function formSubmitHandler (evt) {
   evt.preventDefault();
   nameAria.textContent = nameInput.value;
   activityAria.textContent = activityInput.value;
-  closePopup();
+  closePopup(popupEditElement);
 }
 
 //закрытие попапа при клике вне его окна
@@ -99,14 +112,14 @@ function formSubmitHandler (evt) {
 
 // открытие попап edit
 editButton.addEventListener('click', function() {
-  openPopupEdit(popupElement);
+  openPopupEdit(popupEditElement);
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
 });
 
 // закрытие попап edit
 formClose.addEventListener('click', function() {
-  closePopup(popupElement);
+  closePopup(popupEditElement);
 });
 
 // открытие попап add
@@ -120,7 +133,7 @@ closeFormAdd.addEventListener('click', function() {
 });
 
 
-// popupElement.addEventListener('click', clickOverleyPopup);
+// popupEditElement.addEventListener('click', clickOverleyPopup);
 
 //считывает событие: отпрака формы
-formElement.addEventListener('submit', formSubmitHandler);
+formEditElement.addEventListener('submit', formSubmitHandler);
