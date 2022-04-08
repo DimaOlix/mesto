@@ -22,9 +22,15 @@ const closeFormAdd = popupAddElement.querySelector('.popup__close_type_add');
 const placeInput = popupAddElement.querySelector('.form__input_value_place');
 const linkInput = popupAddElement.querySelector('.form__input_value_link');
 
+// переменные для popup-photo
+const popupPhotoContainer = document.querySelector('.popap_type_photo');
+const popupPhotoElement = document.querySelector('.popap__photo-element');
+
 
 
 const сardСontainer = document.querySelector('.elements__container');
+const сardElement = document.querySelectorAll('.element');
+
 const template = document.querySelector('.templateCard');
 
 const elementCardImage = document.querySelector('.element__image');
@@ -59,10 +65,14 @@ const initialCards = [
   }
 ];
 
+// функция для добавления при загрузке страницы и удаления кнопкой карточек
 function getCards(elem) {
   const newCard = template.content.cloneNode(true);
   const cardImage = newCard.querySelector('.element__image');
   const cardTitle = newCard.querySelector('.element__title');
+
+  const buttonDeletCard = newCard.querySelector('.element__delete');
+  buttonDeletCard.addEventListener('click', deletCard);
   
   cardTitle.textContent = elem.name;
   cardImage.src = elem.link;
@@ -70,12 +80,30 @@ function getCards(elem) {
   return newCard;
 }
 
+// добавление карточек из массива
 function render() {
-  const html = initialCards.map(getCards);
-  сardСontainer.append(...html);
+  const cardFromArray = initialCards.map(getCards);
+  сardСontainer.append(...cardFromArray);
 }
 
 render();
+
+// удаление карточки при нажатии на delet
+function deletCard(evt) {
+  const card = evt.target.closest('.element');
+  card.remove();
+}
+
+// добавление карточек при помощи попап add
+function addCards() {
+  const newCard = template.content.cloneNode(true);
+  const cardImage = newCard.querySelector('.element__image');
+  const cardTitle = newCard.querySelector('.element__title');
+  cardTitle.textContent = placeInput.value;
+  cardImage.src = linkInput.value;
+
+  return newCard;
+}
 
 
 
@@ -91,13 +119,23 @@ function closePopup(popupEditElement) {
 
 
 
-//функция отключения отправки формы, добавления значений 
+//функция отключения отправки формы edit, добавления значений 
 //введенных в форму в соответствующие теги 
 function formSubmitHandler (evt) {
   evt.preventDefault();
   nameAria.textContent = nameInput.value;
   activityAria.textContent = activityInput.value;
   closePopup(popupEditElement);
+}
+
+//функция отключения отправки формы add, добавления значений 
+//введенных в форму в соответствующие теги 
+function addCardSubmit (evt) {
+  evt.preventDefault();
+  const card = addCards();
+  сardСontainer.prepend(card);
+
+  closePopup(popupAddElement);
 }
 
 //закрытие попапа при клике вне его окна
@@ -133,7 +171,15 @@ closeFormAdd.addEventListener('click', function() {
 });
 
 
+
 // popupEditElement.addEventListener('click', clickOverleyPopup);
 
 //считывает событие: отпрака формы
 formEditElement.addEventListener('submit', formSubmitHandler);
+
+formAddElement.addEventListener('submit', addCardSubmit);
+
+// открыть popap-photo
+сardElement.addEventListener('click', function() {
+  openPopupEdit(popupPhotoContainer);
+});

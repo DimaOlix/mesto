@@ -22,50 +22,7 @@
     </section>
 
     <section class="elements">
-      <ul class="elements__container">
-        <li class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Фото древнего строения в горах">
-          <div class="element__content">
-            <h2 class="element__title">Карачаево-Черкесия</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" class="element__image" alt="Фото горы Эльбрус">
-          <div class="element__content">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1556355-unsplash(1).jpg" class="element__image" alt="Фото горы на Домбае">
-          <div class="element__content">
-            <h2 class="element__title">Домбай</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/683475_500r.jpg" class="element__image" alt="Фото прибрежной линии Байкала">
-          <div class="element__content">
-            <h2 class="element__title">Байкал</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/ОзероЭльтон.jpg" class="element__image" alt="Фото озера Эльтон">
-          <div class="element__content">
-            <h2 class="element__title">Озеро Эльтон</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/3178011_500r.jpg" class="element__image" alt="Фото ущелья Хамар-Дабан">
-          <div class="element__content">
-            <h2 class="element__title">Хамар-Дабан</h2>
-            <button class="element__like" type="button" aria-label="Лайк"></button>
-          </div>
-        </li>
-      </ul>
+      <ul class="elements__container"></ul>
     </section>
 
     <footer class="footer">
@@ -91,13 +48,18 @@
         <form class="form form_type_add" name="add-popup-editor">
           <input class="form__input form__input_value_place" type="text" name="input-place" placeholder="Название">
           <input class="form__input form__input_value_link" type="text" name="input-link" placeholder="Ссылка на картинку">
-          <button class="add-form__button" type="submit" name="save-button">Создать</button>
+          <button class="form__button" type="submit" name="save-button">Создать</button>
         </form>
       </div>
     </div>
 
+    <div class="popap popap_type_photo">
+      <img class="popap__photo-element">
+    </div>
+
     <template class="templateCard">
       <li class="element">
+        <button class="element__delete" type="button" aria-label="Удалить фото"></button>
         <img src="" class="element__image" alt="">
         <div class="element__content">
           <h2 class="element__title"></h2>
