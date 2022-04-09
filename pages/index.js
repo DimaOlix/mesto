@@ -70,10 +70,11 @@ function getCards(elem) {
   const newCard = template.content.cloneNode(true);
   const cardImage = newCard.querySelector('.element__image');
   const cardTitle = newCard.querySelector('.element__title');
-
+  
   const buttonDeletCard = newCard.querySelector('.element__delete');
   buttonDeletCard.addEventListener('click', deletCard);
-  
+
+
   cardTitle.textContent = elem.name;
   cardImage.src = elem.link;
 
@@ -89,7 +90,7 @@ function render() {
 render();
 
 // удаление карточки при нажатии на delet
-function deletCard(evt) {
+  function deletCard(evt) {
   const card = evt.target.closest('.element');
   card.remove();
 }
@@ -180,6 +181,6 @@ formEditElement.addEventListener('submit', formSubmitHandler);
 formAddElement.addEventListener('submit', addCardSubmit);
 
 // открыть popap-photo
-сardElement.addEventListener('click', function() {
-  openPopupEdit(popupPhotoContainer);
-});
+// сardElement.addEventListener('click', function() {
+//   openPopupEdit(popupPhotoContainer);
+// });
