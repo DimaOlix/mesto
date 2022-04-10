@@ -8,5 +8,8 @@
   background: transparent url(../../../images/Trash.svg);
   background-size: cover;
   cursor: pointer;
+}
 
+.element__delete:hover {
+  opacity: .6;
 }
