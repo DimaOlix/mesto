@@ -3,8 +3,8 @@
 // переменные для кнопок и полей с информацией в profile
 const nameAria = document.querySelector('.profile__name');
 const activityAria = document.querySelector('.profile__activity');
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
+const buttonEdit = document.querySelector('.profile__edit-button');
+const buttonAdd = document.querySelector('.profile__add-button');
 
 // переменные для попап edit и add
 const popupEditElement = document.querySelector('.popup_type_edit');
@@ -18,7 +18,7 @@ const activityInput = formEditElement.querySelector('.form__input_value_activity
 
 // переменные для формы add
 const formAddElement = popupAddElement.querySelector('.form_type_add');
-const closeFormAdd = popupAddElement.querySelector('.popup__close_type_add');
+const formCloseAdd = popupAddElement.querySelector('.popup__close_type_add');
 const placeInput = popupAddElement.querySelector('.form__input_value_place');
 const linkInput = popupAddElement.querySelector('.form__input_value_link');
 
@@ -65,22 +65,23 @@ const initialCards = [
   }
 ];
 
-// функция выбора элементом карточки в template и добавления им слушателей событий
+// выбор карточки в template и добавления им слушателей событий
 function getCards(elem) {
-  const newCard = template.content.cloneNode(true);
-  const cardImage = newCard.querySelector('.element__image');
-  const cardTitle = newCard.querySelector('.element__title');
-  const buttonDeletCard = newCard.querySelector('.element__delete');
-  const buttonLikeCard = newCard.querySelector('.element__like');
+  const cardNew = template.content.cloneNode(true);
+  const cardImage = cardNew.querySelector('.element__image');
+  const cardTitle = cardNew.querySelector('.element__title');
+  const buttonDeletCard = cardNew.querySelector('.element__delete');
+  const buttonLikeCard = cardNew.querySelector('.element__like');
   
   cardTitle.textContent = elem.name;
   cardImage.src = elem.link;
+  cardImage.alt = elem.name;
  
   buttonDeletCard.addEventListener('click', deletCard);
   buttonLikeCard.addEventListener('click', getLikeCard);
-  cardImage.addEventListener('click', openImagePopap);
-  
-  return newCard;
+  cardImage.addEventListener('click', function() {openImagePopap(elem)});
+
+  return cardNew;
 }
 
 // добавление карточек из массива
@@ -91,16 +92,14 @@ function renderCard() {
 
 renderCard();
 
-//функция создания новой карточки пользователем
+// создание новой карточки пользователем
 function addCardSubmit (evt) {
   evt.preventDefault();
   const card = getCards({name: placeInput.value, link: linkInput.value});
   сardСontainer.prepend(card);
   placeInput.value = '';
   linkInput.value = '';
-  card.addEventListener('click', openClosePopup);
-
-  openClosePopup(popupAddElement);
+  сlosePopup(popupAddElement);
 }
 
 // удаление карточки при нажатии на delet
@@ -115,65 +114,72 @@ function getLikeCard(evt) {
   like.classList.toggle('element__like_active');
 }
 
-function openImagePopap (evt) {
-  popupPhotoElement.src = evt.target.src;
-  popupPhotoTitle.textContent = evt.target.nextElementSibling.firstElementChild.textContent;
-  popupPhotoContainer.classList.toggle('popup_opened');
+// открытие Popap-Photo
+function openImagePopap (elem) {  
+  popupPhotoElement.src = elem.link;
+  popupPhotoElement.alt = elem.name;
+  popupPhotoTitle.textContent = elem.name;
+  openPopup(popupPhotoContainer); 
 }
 
-//функция открытия/закрытия Popup
-function openClosePopup(elem) {
-  elem.classList.toggle('popup_opened');
+// открытие Popup
+function openPopup(elem) {
+  elem.classList.add('popup_opened');
 }
 
-//функция отключения отправки формы edit, добавления значений 
+// закрытие Popup
+function сlosePopup(elem) {
+  elem.classList.remove('popup_opened');
+}
+
+// отключение отправки формы edit, добавление значений 
 //введенных в форму в соответствующие теги 
 function formSubmitHandler (evt) {
   evt.preventDefault();
   nameAria.textContent = nameInput.value;
   activityAria.textContent = activityInput.value;
-  openClosePopup(popupEditElement);
+  сlosePopup(popupEditElement);
 }
 
-//закрытие попапа при клике вне его окна
+// закрытие попапа при клике вне его окна
 // function clickOverleyPopup() {
 //   if (event.target === event.currentTarget) {
-//     openopenClosePopup();
+//     openPopup();
 //   }
 // }
 
-//считываем клики
+//  считываем клики
 
 // открытие попап edit
-editButton.addEventListener('click', function() {
-  openClosePopup(popupEditElement);
+buttonEdit.addEventListener('click', function() {
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
+  openPopup(popupEditElement);
 });
 
 // закрытие попап edit
 formClose.addEventListener('click', function() {
-  openClosePopup(popupEditElement);
+  сlosePopup(popupEditElement);
 });
 
 // открытие попап add
-addButton.addEventListener('click', function() {
-  openClosePopup(popupAddElement);
+buttonAdd.addEventListener('click', function() {
+  openPopup(popupAddElement);
 });
 
 // закрытие попап add
-closeFormAdd.addEventListener('click', function() {
-  openClosePopup(popupAddElement);
+formCloseAdd.addEventListener('click', function() {
+  сlosePopup(popupAddElement);
 });
 
 // закрытие попап попап-photo
 buttonClosePopupPhoto.addEventListener('click', function() {
-  openClosePopup(popupPhotoContainer);
+  сlosePopup(popupPhotoContainer);
 });
 
 // popupEditElement.addEventListener('click', clickOverleyPopup);
 
-//считывает событие: отпрака формы
+// считывает событие: отпрака формы
 formEditElement.addEventListener('submit', formSubmitHandler);
 
 formAddElement.addEventListener('submit', addCardSubmit);

@@ -3,5 +3,5 @@
   justify-content: center;
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s, opacity .5s;
+  transition: opacity .5s, visibility 0s;
 }
