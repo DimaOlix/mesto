@@ -33,9 +33,31 @@
       <div class="popup__container">
         <button class="popup__close popup__close_type_edit" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="form form_type_edit" name="popup-editor">
-          <input class="form__input form__input_value_name" type="text" name="input-name">
-          <input class="form__input form__input_value_activity" type="text" name="input-activity">
+        <form class="form form_type_edit" name="popup-editor" novalidate>
+          <input 
+          class="form__input form__input_value_name"
+          type="text"
+          name="input-name"
+          id="name-input"
+          required
+          minlength="2"
+          maxlength="40"
+          >
+          <span 
+          class="form__input-error"
+          id="name-input-error"></span>
+          <input
+          class="form__input form__input_value_activity"  
+          type="text"
+          name="input-activity"
+          id="activity-input"
+          required
+          minlength="2"
+          maxlength="200"
+          >
+          <span 
+          class="form__input-error"
+          id="activity-input-error"></span>
           <button class="form__button" type="submit" name="save-button">Сохранить</button>
         </form>
       </div>
@@ -46,9 +68,34 @@
         <button class="popup__close popup__close_type_add" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
         <form class="form form_type_add" name="add-popup-editor">
-          <input class="form__input form__input_value_place" type="text" name="input-place" placeholder="Название">
-          <input class="form__input form__input_value_link" type="text" name="input-link" placeholder="Ссылка на картинку">
+
+          <input
+          class="form__input form__input_value_place"
+          type="text"
+          id="place-input"
+          required
+          minlength="2"
+          maxlength="40"
+          name="input-place"
+          placeholder="Название"
+          >
+          <span 
+          class="form__input-error"
+          id="place-input-error"></span>
+
+          <input
+          class="form__input form__input_value_link"
+          type="url"
+          id="link-input"
+          name="input-link"
+          placeholder="Ссылка на картинку"
+          >
+          <span 
+          class="form__input-error"
+          id="link-input-error"></span>
+
           <button class="form__button" type="submit" name="save-button">Создать</button>
+
         </form>
       </div>
     </div>
