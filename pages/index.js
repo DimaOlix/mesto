@@ -7,6 +7,7 @@ const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
 // переменные для попап edit и add
+const popupElement = document.querySelector('.popup');
 const popupEditElement = document.querySelector('.popup_type_edit');
 const popupAddElement = document.querySelector('.popup_type_add');
 
@@ -46,85 +47,6 @@ const elementCardTitle = document.querySelector('.element__title');
 // console.log(formInput);
 // formError = form.querySelector(`#${formInput.id}-error`);
 // console.log(formError);
-
-
-
-const showError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  console.log(errorElement);
-
-  inputElement.classList.add('form__input_type_invalid');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__input-error');  
-};
-
-const hideError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  
-  inputElement.classList.remove('form__input_type_invalid');
-  errorElement.textContent = '';
-  errorElement.classList.remove('form__input-error');  
-};
-
-
-
-function hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-}
-
-function toggleButtonState(inputList, buttonElement) {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('form__button_type_invalid');
-    buttonElement.setAttribute('disabled', 'disabled');
-  } else {
-    buttonElement.classList.remove('form__button_type_invalid');
-    buttonElement.removeAttribute('disabled', 'disabled');
-
-  }
-}
-
-const toggleErrorMessage = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideError(formElement, inputElement);
-  }
-};
-
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
-  const buttonElement = formElement.querySelector('.form__button');
-  
-  enableValidationForm(formElement, buttonElement)
-  toggleButtonState(inputList, buttonElement);
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      toggleErrorMessage(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
-    });
-  });
-}
-
-function enableValidationForm(formElement, buttonElement) {
-  if (formElement.checkValidity()) {
-    buttonElement.setAttribute('disabled', 'disabled');
-  }
-}
-
-function enableValidation() {
-  const formList = Array.from(document.querySelectorAll('.form'));
-  
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (el) => {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement);
-  });
-}
-
-enableValidation();
 
 
 
@@ -236,14 +158,7 @@ function formSubmitHandler (evt) {
   сlosePopup(popupEditElement);
 }
 
-// закрытие попапа при клике вне его окна
-// function clickOverleyPopup() {
-//   if (event.target === event.currentTarget) {
-//     openPopup();
-//   }
-// }
-
-//  считываем клики
+//  СЧИТЫВАЕМ СОБЫТИЯ
 
 // открытие попап edit
 buttonEdit.addEventListener('click', function() {
@@ -292,26 +207,37 @@ buttonClosePopupPhoto.addEventListener('click', function() {
   сlosePopup(popupPhotoContainer);
 });
 
-// popupEditElement.addEventListener('click', clickOverleyPopup);
+
+// функция закрытия попап при нажатии на оверлей
+function closeOverleyPopup(evt) {
+  if (evt.target === evt.currentTarget) {
+    сlosePopup(evt.currentTarget);
+  }
+}
+
+// функция добавления слушателей на оверлей для закрытия попап
+function setListenerOverleyPopup() {
+  const popupList = document.querySelectorAll('.popup');
+  popupList.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+      closeOverleyPopup(evt);
+    });
+
+  });
+}
+
+setListenerOverleyPopup();
+
+
+// document.addEventListener('keydown', (evt) => {
+//   if (evt.key === 'Escape') {
+//     сlosePopup(popupEditElement);
+//   }
+// });
+
+
 
 // считывает событие: отпрака формы
 formEditElement.addEventListener('submit', formSubmitHandler);
 
 formAddElement.addEventListener('submit', addCardSubmit);
-
-
-// function enableValidation(formSelector) {
-//   const formElement = document.querySelector(formSelector);
-//   formElement.addEventListener ('submit', function (evt) {
-//     handleFormSubmit(evt);
-//   });
-// }
-
-
-// function handleFormSubmit(evt) {
-//   evt.preventDefault();
-//   const form = evt.currentTarget;
-//   if (form.toggleErrorMessage()) {
-
-//   }
-// }

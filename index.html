@@ -33,6 +33,7 @@
       <div class="popup__container">
         <button class="popup__close popup__close_type_edit" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
+        
         <form class="form form_type_edit" name="popup-editor" novalidate>
           <input 
           class="form__input form__input_value_name"
@@ -61,6 +62,7 @@
           id="activity-input-error"></span>
           <button class="form__button" type="submit" name="save-button">Сохранить</button>
         </form>
+
       </div>
     </div>
 
@@ -68,15 +70,15 @@
       <div class="popup__container">
         <button class="popup__close popup__close_type_add" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
+        
         <form class="form form_type_add" name="add-popup-editor" novalidate>
-
           <input
           class="form__input form__input_value_place"
           type="text"
           id="place-input"
           required
           minlength="2"
-          maxlength="40"
+          maxlength="30"
           name="input-place"
           placeholder="Название"
           >
@@ -97,8 +99,8 @@
           id="link-input-error"></span>
 
           <button class="form__button" type="submit" name="save-button">Создать</button>
-
         </form>
+
       </div>
     </div>
 
@@ -122,5 +124,6 @@
     </template>
 
     <script src="./pages/index.js"></script>
+    <script src="./pages/validate.js"></script>
   </body>
 </html>
