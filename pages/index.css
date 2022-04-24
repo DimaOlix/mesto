@@ -42,4 +42,7 @@
 @import url(../blocks/form/__button/form__button.css);
 @import url(../blocks/form/__button/_type/form__button_type_invalid.css);
 @import url(../blocks/form/__input-error/form__input-error.css);
+@import url(../blocks/form/__input-error/_position/form__input-error_position_top.css);
+@import url(../blocks/form/__input-error/_position/form__input-error_position_button.css);
+
 
