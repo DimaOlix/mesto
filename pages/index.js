@@ -39,13 +39,13 @@ const elementCardTitle = document.querySelector('.element__title');
 
 
 
+// ВАЛИДАЦИЯ ФОРМЫ
 
-
-const form = document.querySelector('.form');
-const formInput = form.querySelector('.form__input');
-console.log(formInput);
-formError = form.querySelector(`#${formInput.id}-error`);
-console.log(formError);
+// const form = document.querySelector('.form');
+// const formInput = form.querySelector('.form__input');
+// console.log(formInput);
+// formError = form.querySelector(`#${formInput.id}-error`);
+// console.log(formError);
 
 
 
@@ -55,8 +55,7 @@ const showError = (formElement, inputElement, errorMessage) => {
 
   inputElement.classList.add('form__input_type_invalid');
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__input-error');
-  
+  errorElement.classList.add('form__input-error');  
 };
 
 const hideError = (formElement, inputElement) => {
@@ -67,6 +66,8 @@ const hideError = (formElement, inputElement) => {
   errorElement.classList.remove('form__input-error');  
 };
 
+
+
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
@@ -76,12 +77,15 @@ function hasInvalidInput(inputList) {
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add('form__button_type_invalid');
+    buttonElement.setAttribute('disabled', 'disabled');
   } else {
     buttonElement.classList.remove('form__button_type_invalid');
+    buttonElement.removeAttribute('disabled', 'disabled');
+
   }
 }
 
-const checkInputValidity = (formElement, inputElement) => {
+const toggleErrorMessage = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     showError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -93,13 +97,20 @@ function setEventListeners(formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.form__input'));
   const buttonElement = formElement.querySelector('.form__button');
   
+  enableValidationForm(formElement, buttonElement)
   toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement);
+      toggleErrorMessage(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
     });
   });
+}
+
+function enableValidationForm(formElement, buttonElement) {
+  if (formElement.checkValidity()) {
+    buttonElement.setAttribute('disabled', 'disabled');
+  }
 }
 
 function enableValidation() {
@@ -115,13 +126,6 @@ function enableValidation() {
 
 enableValidation();
 
-
-
-
-
-form.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
 
 
 
@@ -243,22 +247,37 @@ function formSubmitHandler (evt) {
 
 // открытие попап edit
 buttonEdit.addEventListener('click', function() {
+  const inputList = Array.from(formEditElement.querySelectorAll('.form__input'));
+  const buttonElement = formEditElement.querySelector('.form__button');
+  
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
-  nameInput.classList.remove('form__input_type_invalid');
-  activityInput.classList.remove('form__input_type_invalid');
+  
+  inputList.forEach((inputElement) => {
+    hideError(formEditElement, inputElement);
+  });
+  
+  toggleButtonState(inputList, buttonElement);
 
   openPopup(popupEditElement);
 });
 
 // закрытие попап edit
 formClose.addEventListener('click', function() {
-
   сlosePopup(popupEditElement);
 });
 
 // открытие попап add
 buttonAdd.addEventListener('click', function() {
+  
+  const inputList = Array.from(formAddElement.querySelectorAll('.form__input'));
+  const buttonElement = formAddElement.querySelector('.form__button');
+  
+  inputList.forEach((inputElement) => {
+    hideError(formAddElement, inputElement);
+  });  
+  toggleButtonState(inputList, buttonElement);
+
   openPopup(popupAddElement);
 });
 
@@ -292,7 +311,7 @@ formAddElement.addEventListener('submit', addCardSubmit);
 // function handleFormSubmit(evt) {
 //   evt.preventDefault();
 //   const form = evt.currentTarget;
-//   if (form.checkInputValidity()) {
+//   if (form.toggleErrorMessage()) {
 
 //   }
 // }

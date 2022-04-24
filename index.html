@@ -46,6 +46,7 @@
           <span 
           class="form__input-error"
           id="name-input-error"></span>
+          
           <input
           class="form__input form__input_value_activity"  
           type="text"
@@ -67,7 +68,7 @@
       <div class="popup__container">
         <button class="popup__close popup__close_type_add" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="form form_type_add" name="add-popup-editor">
+        <form class="form form_type_add" name="add-popup-editor" novalidate>
 
           <input
           class="form__input form__input_value_place"
@@ -86,6 +87,7 @@
           <input
           class="form__input form__input_value_link"
           type="url"
+          required
           id="link-input"
           name="input-link"
           placeholder="Ссылка на картинку"
