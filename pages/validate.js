@@ -75,17 +75,17 @@ function hideError(formElement, inputElement) {
 //   }
 // }
 
-function setListenerEsc() {
+function setListenerEsc(evt) {
   const popupList = Array.from(document.querySelectorAll('.popup'));
-  console.log(popupList)
+  console.log(evt.key)
   popupList.forEach((elem) => {
     console.log(elem)
 
-    if (elem.key === 'Escape') {
+    if (evt.key === 'Escape') {
       сlosePopup(elem);
       window.removeEventListener('keyup', setListenerEsc);
     }
   });
 }
 
-document.addEventListener('keyup', setListenerEsc);
+

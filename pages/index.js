@@ -167,6 +167,8 @@ buttonEdit.addEventListener('click', function() {
   
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
+
+  window.addEventListener('keyup', setListenerEsc);
   
   inputList.forEach((inputElement) => {
     hideError(formEditElement, inputElement);
@@ -187,11 +189,14 @@ buttonAdd.addEventListener('click', function() {
   
   const inputList = Array.from(formAddElement.querySelectorAll('.form__input'));
   const buttonElement = formAddElement.querySelector('.form__button');
+
+  window.addEventListener('keyup', setListenerEsc);
   
   inputList.forEach((inputElement) => {
     hideError(formAddElement, inputElement);
   });  
   toggleButtonState(inputList, buttonElement);
+
 
   openPopup(popupAddElement);
 });
