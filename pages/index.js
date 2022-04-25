@@ -168,7 +168,7 @@ buttonEdit.addEventListener('click', function() {
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
 
-  window.addEventListener('keyup', setListenerEsc);
+  window.addEventListener('keyup', closePopapEsc);
   
   inputList.forEach((inputElement) => {
     hideError(formEditElement, inputElement);
@@ -190,7 +190,7 @@ buttonAdd.addEventListener('click', function() {
   const inputList = Array.from(formAddElement.querySelectorAll('.form__input'));
   const buttonElement = formAddElement.querySelector('.form__button');
 
-  window.addEventListener('keyup', setListenerEsc);
+  window.addEventListener('keyup', closePopapEsc);
   
   inputList.forEach((inputElement) => {
     hideError(formAddElement, inputElement);
@@ -232,15 +232,6 @@ function setListenerOverleyPopup() {
 }
 
 setListenerOverleyPopup();
-
-
-// document.addEventListener('keydown', (evt) => {
-//   if (evt.key === 'Escape') {
-//     сlosePopup(popupEditElement);
-//   }
-// });
-
-
 
 // считывает событие: отпрака формы
 formEditElement.addEventListener('submit', formSubmitHandler);

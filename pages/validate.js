@@ -12,6 +12,15 @@ function enableValidation() {
 
 enableValidation();
 
+// enableValidation({
+//   formSelector: '.form',
+//   inputSelector: '.form__input',
+//   submitButtonSelector: '.form__button',
+//   inactiveButtonClass: 'form__button_type_invalid',
+//   inputErrorClass: 'form__input_type_invalid',
+//   errorClass: 'form__input-error'
+// });
+
 // установка импутам слушателей событий ввода
 function setEventListeners(formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.form__input'));
@@ -68,22 +77,14 @@ function hideError(formElement, inputElement) {
   errorElement.textContent = '';
 }
 
-// function closePopapUsingEsc(elem) {
-//   if (elem.key === 'Escape') {
-//     сlosePopup(elem);
-//     window.removeEventListener('keyup', closePopapUsingEsc);
-//   }
-// }
-
-function setListenerEsc(evt) {
+// закрытие попап по нажатию ESC
+function closePopapEsc(evt) {
   const popupList = Array.from(document.querySelectorAll('.popup'));
-  console.log(evt.key)
   popupList.forEach((elem) => {
-    console.log(elem)
 
     if (evt.key === 'Escape') {
       сlosePopup(elem);
-      window.removeEventListener('keyup', setListenerEsc);
+      window.removeEventListener('keyup', closePopapEsc);
     }
   });
 }
