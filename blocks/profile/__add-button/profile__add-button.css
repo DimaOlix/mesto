@@ -13,6 +13,10 @@
   opacity: .6;
 }
 
+.profile__add-button:focus-visible {
+  outline: 2px solid rgb(81, 74, 74);
+}
+
 @media all and (max-width: 585px){
   .profile__add-button {
     margin-top: 20px;

@@ -15,7 +15,9 @@
   opacity: .6;
 }
 
-
+.profile__edit-button:focus-visible {
+  outline: 2px solid rgb(81, 74, 74);
+}
 
 @media all and (max-width: 700px){
   .profile__edit-button {

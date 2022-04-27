@@ -31,10 +31,16 @@
 
     <div class="popup popup_type_edit">
       <div class="popup__container">
-        <button class="popup__close popup__close_type_edit" type="button" aria-label="Закрыть"></button>
+        
+        <button
+        class="popup__close popup__close_type_edit"
+        type="button"
+        aria-label="Закрыть"></button>
+
         <h2 class="popup__title">Редактировать профиль</h2>
         
         <form class="form form_type_edit" name="popup-editor" novalidate>
+          
           <input 
           class="form__input form__input_value_name"
           type="text"
@@ -68,7 +74,12 @@
 
     <div class="popup popup_type_add">
       <div class="popup__container">
-        <button class="popup__close popup__close_type_add" type="button" aria-label="Закрыть"></button>
+        
+        <button
+        class="popup__close popup__close_type_add"
+        type="button"
+        aria-label="Закрыть"></button>
+
         <h2 class="popup__title">Новое место</h2>
         
         <form class="form form_type_add" name="add-popup-editor" novalidate>
@@ -98,7 +109,11 @@
           class="form__input-error form__input-error_position_button"
           id="link-input-error"></span>
 
-          <button class="form__button" type="submit" name="save-button">Создать</button>
+          <button
+          class="form__button"
+          type="submit"
+          name="save-button">Создать</button>
+
         </form>
 
       </div>
@@ -106,7 +121,12 @@
 
     <div class="popup popup_type_photo">
       <div class="popup__container-photo">
-        <button class="popup__close popup__close_type_image" type="button" aria-label="Закрыть"></button>
+        
+        <button
+        class="popup__close popup__close_type_image"
+        type="button"
+        aria-label="Закрыть"></button>
+        
         <img class="popup__photo-element" src="#" alt="картинка">
         <h3 class="popup__title-photo"></h3>
       </div>
@@ -114,11 +134,21 @@
 
     <template class="templateCard">
       <li class="element">
-        <button class="element__delete" type="button" aria-label="Удалить фото"></button>
+        
+        <button
+        class="element__delete"
+        type="button"
+        aria-label="Удалить фото"></button>
+
         <img src="#" class="element__image" alt="картинка">
         <div class="element__content">
           <h2 class="element__title"></h2>
-          <button class="element__like" type="button" aria-label="Лайк"></button>
+          
+          <button
+          class="element__like"
+          type="button"
+          aria-label="Лайк"></button>
+          
         </div>
       </li>
     </template>

@@ -1,92 +1,82 @@
-// включение валидации форм попапов
-function enableValidation() {
-  const formList = Array.from(document.querySelectorAll('.form'));
+
+const allSelectorsForm = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_type_invalid',
+  inputErrorClass: 'form__input_type_invalid',
+}
+
+// включение валидации форм попапов, отключение отправки форм
+function enableValidation(config) {
+  const formsList = Array.from(document.querySelectorAll(config.formSelector));
   
-  formList.forEach((formElement) => {
+  formsList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, config);
   });
 }
 
-enableValidation();
-
-// enableValidation({
-//   formSelector: '.form',
-//   inputSelector: '.form__input',
-//   submitButtonSelector: '.form__button',
-//   inactiveButtonClass: 'form__button_type_invalid',
-//   inputErrorClass: 'form__input_type_invalid',
-//   errorClass: 'form__input-error'
-// });
+enableValidation(allSelectorsForm);
 
 // установка импутам слушателей событий ввода
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
-  const buttonElement = formElement.querySelector('.form__button');
+function setEventListeners(formElement, config) {
+  const inputsList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
   
-  inputList.forEach((inputElement) => {
+  toggleButtonState(inputsList, buttonElement, config);
+  
+  inputsList.forEach((inputElement) => {
+    hideError(formElement, inputElement, config);
+
     inputElement.addEventListener('input', () => {
-      toggleErrorMessage(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      toggleErrorMessage(formElement, inputElement, config);
+      toggleButtonState(inputsList, buttonElement, config);
     });
   });
 }
 
 // проверка на невалидность хотябы одного поля
-function hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => {
+function hasInvalidInput(inputsList) {
+  return inputsList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 }
 
 // добавление/удаление классов, активности кнопкам формы
-function toggleButtonState(inputList, buttonElement) {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('form__button_type_invalid');
+function toggleButtonState(inputsList, buttonElement, config) {
+  if (hasInvalidInput(inputsList)) {
+    buttonElement.classList.add(config.inactiveButtonClass);
     buttonElement.setAttribute('disabled', 'disabled');
   } else {
-    buttonElement.classList.remove('form__button_type_invalid');
+    buttonElement.classList.remove(config.inactiveButtonClass);
     buttonElement.removeAttribute('disabled', 'disabled');
   }
 }
 
 // проверка на валидность полей ввода
-function toggleErrorMessage(formElement, inputElement) {
+function toggleErrorMessage(formElement, inputElement, config) {
   if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage);
+    showError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
-    hideError(formElement, inputElement);
+    hideError(formElement, inputElement, config);
   }
 }
 
 // появление сообщения об ошибке и добавление класса ошибки полю ввода
-function showError(formElement, inputElement, errorMessage) {
+function showError(formElement, inputElement, errorMessage, config) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
   errorElement.textContent = errorMessage;
-  inputElement.classList.add('form__input_type_invalid');
+  inputElement.classList.add(config.inputErrorClass);
 }
 
 // скрытие текста ошибки и удаление класса ошибки у поля ввода
-function hideError(formElement, inputElement) {
+function hideError(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   
-  inputElement.classList.remove('form__input_type_invalid');
+  inputElement.classList.remove(config.inputErrorClass);
   errorElement.textContent = '';
 }
-
-// закрытие попап по нажатию ESC
-function closePopapEsc(evt) {
-  const popupList = Array.from(document.querySelectorAll('.popup'));
-  popupList.forEach((elem) => {
-
-    if (evt.key === 'Escape') {
-      сlosePopup(elem);
-      window.removeEventListener('keyup', closePopapEsc);
-    }
-  });
-}
-
-

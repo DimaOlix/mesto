@@ -37,24 +37,6 @@ const сardElement = document.querySelectorAll('.element');
 const elementCardImage = document.querySelector('.element__image');
 const elementCardTitle = document.querySelector('.element__title');
 
-
-
-
-// ВАЛИДАЦИЯ ФОРМЫ
-
-// const form = document.querySelector('.form');
-// const formInput = form.querySelector('.form__input');
-// console.log(formInput);
-// formError = form.querySelector(`#${formInput.id}-error`);
-// console.log(formError);
-
-
-
-
-
-
-
-
 // массив для карточек при загрузке страницы
 const initialCards = [
   {
@@ -110,15 +92,6 @@ function renderCard() {
 
 renderCard();
 
-// создание новой карточки пользователем
-function addCardSubmit (evt) {
-  evt.preventDefault();
-  const card = getCards({name: placeInput.value, link: linkInput.value});
-  сardСontainer.prepend(card);
-  сlosePopup(popupAddElement);
-  formAddElement.reset();
-}
-
 // удаление карточки при нажатии на delet
 function deletCard(evt) {
   const card = evt.target.closest('.element');
@@ -131,14 +104,6 @@ function getLikeCard(evt) {
   like.classList.toggle('element__like_active');
 }
 
-// открытие Popap-Photo
-function openImagePopap (elem) {  
-  popupPhotoElement.src = elem.link;
-  popupPhotoElement.alt = elem.name;
-  popupPhotoTitle.textContent = elem.name;
-  openPopup(popupPhotoContainer); 
-}
-
 // открытие Popup
 function openPopup(elem) {
   elem.classList.add('popup_opened');
@@ -149,69 +114,60 @@ function сlosePopup(elem) {
   elem.classList.remove('popup_opened');
 }
 
-// отключение отправки формы edit, добавление значений 
-//введенных в форму в соответствующие теги 
-function formSubmitHandler (evt) {
-  evt.preventDefault();
+// добавление значений введенных в форму в соответствующие теги 
+function editProfileSubmit() {
   nameAria.textContent = nameInput.value;
-  activityAria.textContent = activityInput.value;
-  сlosePopup(popupEditElement);
+  activityAria.textContent = activityInput.value;  
 }
 
-//  СЧИТЫВАЕМ СОБЫТИЯ
+// создание новой карточки пользователем
+function addCardSubmit() {
+  const card = getCards({name: placeInput.value, link: linkInput.value});
 
-// открытие попап edit
-buttonEdit.addEventListener('click', function() {
-  const inputList = Array.from(formEditElement.querySelectorAll('.form__input'));
-  const buttonElement = formEditElement.querySelector('.form__button');
-  
+  сardСontainer.prepend(card);
+}
+
+// закрытие попап по нажатию ESC
+function closePopapEsc(evt) {
+  const popupsList = Array.from(document.querySelectorAll('.popup'));
+
+  popupsList.forEach((elem) => {
+    
+    if (evt.key === 'Escape') {
+      сlosePopup(elem);
+
+      window.removeEventListener('keyup', closePopapEsc);
+    }
+  });
+}
+
+// открытие Popap-Photo
+function openImagePopap (elem) {  
+  popupPhotoElement.src = elem.link;
+  popupPhotoElement.alt = elem.name;
+  popupPhotoTitle.textContent = elem.name;
+
+  window.addEventListener('keyup', closePopapEsc);
+
+  openPopup(popupPhotoContainer); 
+}
+
+// открытие Add-формы
+function openAddForm(config) {
+  setEventListeners(formAddElement, config);
+
+  window.addEventListener('keyup', closePopapEsc);
+}
+
+// открытие Edit-формы
+function openEditForm(config) {
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
+ 
+  setEventListeners(formEditElement, config);
 
   window.addEventListener('keyup', closePopapEsc);
-  
-  inputList.forEach((inputElement) => {
-    hideError(formEditElement, inputElement);
-  });
-  
-  toggleButtonState(inputList, buttonElement);
-
-  openPopup(popupEditElement);
-});
-
-// закрытие попап edit
-formClose.addEventListener('click', function() {
-  сlosePopup(popupEditElement);
-});
-
-// открытие попап add
-buttonAdd.addEventListener('click', function() {
-  
-  const inputList = Array.from(formAddElement.querySelectorAll('.form__input'));
-  const buttonElement = formAddElement.querySelector('.form__button');
-
-  window.addEventListener('keyup', closePopapEsc);
-  
-  inputList.forEach((inputElement) => {
-    hideError(formAddElement, inputElement);
-  });  
-  toggleButtonState(inputList, buttonElement);
-
-
-  openPopup(popupAddElement);
-});
-
-// закрытие попап add
-formCloseAdd.addEventListener('click', function() {
-  сlosePopup(popupAddElement);
-  formAddElement.reset();
-});
-
-// закрытие попап попап-photo
-buttonClosePopupPhoto.addEventListener('click', function() {
-  сlosePopup(popupPhotoContainer);
-});
-
+} 
 
 // функция закрытия попап при нажатии на оверлей
 function closeOverleyPopup(evt) {
@@ -222,18 +178,57 @@ function closeOverleyPopup(evt) {
 
 // функция добавления слушателей на оверлей для закрытия попап
 function setListenerOverleyPopup() {
-  const popupList = document.querySelectorAll('.popup');
-  popupList.forEach((popup) => {
+  const popupsList = document.querySelectorAll('.popup');
+  
+  popupsList.forEach((popup) => {
+
     popup.addEventListener('click', (evt) => {
       closeOverleyPopup(evt);
     });
-
   });
 }
 
 setListenerOverleyPopup();
 
-// считывает событие: отпрака формы
-formEditElement.addEventListener('submit', formSubmitHandler);
 
-formAddElement.addEventListener('submit', addCardSubmit);
+//  СЧИТЫВАЕМ СОБЫТИЯ
+
+// открытие попап edit
+buttonEdit.addEventListener('click', function() {
+  openEditForm(allSelectorsForm);
+  openPopup(popupEditElement);
+});
+
+// закрытие попап edit
+formClose.addEventListener('click', function() {
+  сlosePopup(popupEditElement);
+});
+
+// открытие попап add
+buttonAdd.addEventListener('click', function() {
+  formAddElement.reset();
+  openAddForm(allSelectorsForm);
+  openPopup(popupAddElement);
+});
+
+// закрытие попап add
+formCloseAdd.addEventListener('click', function() {
+  сlosePopup(popupAddElement);
+});
+
+// закрытие попап попап-photo
+buttonClosePopupPhoto.addEventListener('click', function() {
+  сlosePopup(popupPhotoContainer);
+});
+
+// считывает событие: отпрака формы
+formEditElement.addEventListener('submit', function() {
+  editProfileSubmit();
+  сlosePopup(popupEditElement);
+});
+
+formAddElement.addEventListener('submit', function() {
+  addCardSubmit();
+  сlosePopup(popupAddElement);
+  formAddElement.reset();
+});
