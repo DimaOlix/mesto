@@ -23,6 +23,8 @@ const formAddElement = popupAddElement.querySelector('.form_type_add');
 const formCloseAdd = popupAddElement.querySelector('.popup__close_type_add');
 const placeInput = popupAddElement.querySelector('.form__input_value_place');
 const linkInput = popupAddElement.querySelector('.form__input_value_link');
+const buttonAddForm = formAddElement.querySelector('.form__button');
+
 
 // переменные для popup-photo
 const popupPhotoContainer = document.querySelector('.popup_type_photo');
@@ -36,34 +38,6 @@ const сardСontainer = document.querySelector('.elements__container');
 const сardElement = document.querySelectorAll('.element');
 const elementCardImage = document.querySelector('.element__image');
 const elementCardTitle = document.querySelector('.element__title');
-
-// массив для карточек при загрузке страницы
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 // выбор карточки в template и добавления им слушателей событий
 function getCards(elem) {
@@ -79,7 +53,7 @@ function getCards(elem) {
  
   buttonDeletCard.addEventListener('click', deletCard);
   buttonLikeCard.addEventListener('click', getLikeCard);
-  cardImage.addEventListener('click', function() {openImagePopap(elem)});
+  cardImage.addEventListener('click', () => openImagePopap(elem));
 
   return cardNew;
 }
@@ -107,11 +81,13 @@ function getLikeCard(evt) {
 // открытие Popup
 function openPopup(elem) {
   elem.classList.add('popup_opened');
+  document.addEventListener('keyup', closePopapEsc);
 }
 
 // закрытие Popup
 function сlosePopup(elem) {
   elem.classList.remove('popup_opened');
+  document.removeEventListener('keyup', closePopapEsc);
 }
 
 // добавление значений введенных в форму в соответствующие теги 
@@ -121,7 +97,7 @@ function editProfileSubmit() {
 }
 
 // создание новой карточки пользователем
-function addCardSubmit() {
+function addCardSubmit(evt) {
   const card = getCards({name: placeInput.value, link: linkInput.value});
 
   сardСontainer.prepend(card);
@@ -129,16 +105,11 @@ function addCardSubmit() {
 
 // закрытие попап по нажатию ESC
 function closePopapEsc(evt) {
-  const popupsList = Array.from(document.querySelectorAll('.popup'));
+  const popup = document.querySelector('.popup_opened');
 
-  popupsList.forEach((elem) => {
-    
-    if (evt.key === 'Escape') {
-      сlosePopup(elem);
-
-      window.removeEventListener('keyup', closePopapEsc);
-    }
-  });
+  if (evt.key === 'Escape') {
+    сlosePopup(popup);
+  }
 }
 
 // открытие Popap-Photo
@@ -147,26 +118,32 @@ function openImagePopap (elem) {
   popupPhotoElement.alt = elem.name;
   popupPhotoTitle.textContent = elem.name;
 
-  window.addEventListener('keyup', closePopapEsc);
-
   openPopup(popupPhotoContainer); 
 }
 
-// открытие Add-формы
-function openAddForm(config) {
-  setEventListeners(formAddElement, config);
+// проверка Add-формы
+function checkAddForm(config, formAddElement) {
+  const inputsList = Array.from(formAddElement.querySelectorAll(config.inputSelector));
+  const button = formAddElement.querySelector(config.submitButtonSelector);
 
-  window.addEventListener('keyup', closePopapEsc);
+  inputsList.forEach((elem) => {
+    toggleButtonState(inputsList, button, config);
+    hideError(formAddElement, elem, config)
+  });
 }
 
 // открытие Edit-формы
-function openEditForm(config) {
+function openEditForm(config, formEditElement) {
+  const inputsList = Array.from(formEditElement.querySelectorAll(config.inputSelector));
+  const button = formEditElement.querySelector(config.submitButtonSelector);
+  
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
  
-  setEventListeners(formEditElement, config);
-
-  window.addEventListener('keyup', closePopapEsc);
+  inputsList.forEach((elem) => {
+    toggleButtonState(inputsList, button, config);
+    hideError(formEditElement, elem, config);
+  });
 } 
 
 // функция закрытия попап при нажатии на оверлей
@@ -195,7 +172,7 @@ setListenerOverleyPopup();
 
 // открытие попап edit
 buttonEdit.addEventListener('click', function() {
-  openEditForm(allSelectorsForm);
+  openEditForm(allSelectorsForm, formEditElement);
   openPopup(popupEditElement);
 });
 
@@ -207,7 +184,7 @@ formClose.addEventListener('click', function() {
 // открытие попап add
 buttonAdd.addEventListener('click', function() {
   formAddElement.reset();
-  openAddForm(allSelectorsForm);
+  checkAddForm(allSelectorsForm, formAddElement);
   openPopup(popupAddElement);
 });
 
@@ -226,9 +203,10 @@ formEditElement.addEventListener('submit', function() {
   editProfileSubmit();
   сlosePopup(popupEditElement);
 });
-
-formAddElement.addEventListener('submit', function() {
-  addCardSubmit();
+ 
+formAddElement.addEventListener('submit', function(evt) {
+  addCardSubmit(evt);
+  buttonAddForm.setAttribute('disabled', 'disabled');
   сlosePopup(popupAddElement);
   formAddElement.reset();
 });
