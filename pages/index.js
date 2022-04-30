@@ -104,10 +104,9 @@ function addCardSubmit(evt) {
 }
 
 // закрытие попап по нажатию ESC
-function closePopapEsc(evt) {
-  const popup = document.querySelector('.popup_opened');
-
+function closePopapEsc(evt) {  
   if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
     сlosePopup(popup);
   }
 }
@@ -121,30 +120,23 @@ function openImagePopap (elem) {
   openPopup(popupPhotoContainer); 
 }
 
-// проверка Add-формы
-function checkAddForm(config, formAddElement) {
-  const inputsList = Array.from(formAddElement.querySelectorAll(config.inputSelector));
-  const button = formAddElement.querySelector(config.submitButtonSelector);
+// проверка форм во время их открытия
+function checkFormDuringOpen(config, formElement) {
+  const inputsList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const button = formElement.querySelector(config.submitButtonSelector);
 
   inputsList.forEach((elem) => {
     toggleButtonState(inputsList, button, config);
-    hideError(formAddElement, elem, config)
+    hideError(formElement, elem, config)
   });
 }
 
 // открытие Edit-формы
-function openEditForm(config, formEditElement) {
-  const inputsList = Array.from(formEditElement.querySelectorAll(config.inputSelector));
-  const button = formEditElement.querySelector(config.submitButtonSelector);
-  
+function openEditForm(config, formElement) {
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
- 
-  inputsList.forEach((elem) => {
-    toggleButtonState(inputsList, button, config);
-    hideError(formEditElement, elem, config);
-  });
-} 
+  checkFormDuringOpen(config, formElement);
+}
 
 // функция закрытия попап при нажатии на оверлей
 function closeOverleyPopup(evt) {
@@ -184,7 +176,7 @@ formClose.addEventListener('click', function() {
 // открытие попап add
 buttonAdd.addEventListener('click', function() {
   formAddElement.reset();
-  checkAddForm(allSelectorsForm, formAddElement);
+  checkFormDuringOpen(allSelectorsForm, formAddElement);
   openPopup(popupAddElement);
 });
 
