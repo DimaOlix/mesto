@@ -127,7 +127,7 @@ function checkFormDuringOpen(config, formElement) {
 
   inputsList.forEach((elem) => {
     toggleButtonState(inputsList, button, config);
-    hideError(formElement, elem, config)
+    hideError(formElement, elem, config);
   });
 }
 
