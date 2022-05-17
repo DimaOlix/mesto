@@ -1,3 +1,10 @@
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+import {initialCards} from './cards.js';
+import {allSelectorsForm} from './arrawSelectors.js';
+import {openPopup} from './utils.js';
+import {сlosePopup} from './utils.js';
+
 // создание переменных
 
 // переменные для кнопок и полей с информацией в profile
@@ -7,12 +14,10 @@ const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
 // переменные для попап edit и add
-const popupElement = document.querySelector('.popup');
 const popupEditElement = document.querySelector('.popup_type_edit');
 const popupAddElement = document.querySelector('.popup_type_add');
 
 // переменные для формы edit
-const inputElement = popupEditElement.querySelector('.form__input');
 const formEditElement = popupEditElement.querySelector('.form_type_edit');
 const formClose = popupEditElement.querySelector('.popup__close_type_edit');
 const nameInput = formEditElement.querySelector('.form__input_value_name');
@@ -25,70 +30,31 @@ const placeInput = popupAddElement.querySelector('.form__input_value_place');
 const linkInput = popupAddElement.querySelector('.form__input_value_link');
 const buttonAddForm = formAddElement.querySelector('.form__button');
 
-
 // переменные для popup-photo
 const popupPhotoContainer = document.querySelector('.popup_type_photo');
-const popupPhotoElement = document.querySelector('.popup__photo-element');
-const popupPhotoTitle = document.querySelector('.popup__title-photo');
 const buttonClosePopupPhoto = document.querySelector('.popup__close_type_image');
 
 // переменные для template
-const template = document.querySelector('.templateCard');
 const сardСontainer = document.querySelector('.elements__container');
-const сardElement = document.querySelectorAll('.element');
-const elementCardImage = document.querySelector('.element__image');
-const elementCardTitle = document.querySelector('.element__title');
 
-// выбор карточки в template и добавления им слушателей событий
-function getCards(elem) {
-  const cardNew = template.content.cloneNode(true);
-  const cardImage = cardNew.querySelector('.element__image');
-  const cardTitle = cardNew.querySelector('.element__title');
-  const buttonDeletCard = cardNew.querySelector('.element__delete');
-  const buttonLikeCard = cardNew.querySelector('.element__like');
-  
-  cardTitle.textContent = elem.name;
-  cardImage.src = elem.link;
-  cardImage.alt = elem.name;
- 
-  buttonDeletCard.addEventListener('click', deletCard);
-  buttonLikeCard.addEventListener('click', getLikeCard);
-  cardImage.addEventListener('click', () => openImagePopap(elem));
+// создание наследников класса валидации формы
+const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
+const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
 
-  return cardNew;
-}
+validFormEdit.enableValidation()
+validFormAdd.enableValidation()
 
-// добавление карточек из массива
+// добавление карточек из массива при загрузке
 function renderCard() {
-  const cardFromArray = initialCards.map(getCards);
-  сardСontainer.append(...cardFromArray);
+  initialCards.forEach((item) => {
+    const card = new Card(item, 'templateCard');
+    const cardElem = card.getCard()
+    
+    сardСontainer.append(cardElem);
+  });
 }
 
 renderCard();
-
-// удаление карточки при нажатии на delet
-function deletCard(evt) {
-  const card = evt.target.closest('.element');
-  card.remove();
-}
-
-// вешаем Like
-function getLikeCard(evt) {
-  const like = evt.target.closest('.element__like');
-  like.classList.toggle('element__like_active');
-}
-
-// открытие Popup
-function openPopup(elem) {
-  elem.classList.add('popup_opened');
-  document.addEventListener('keyup', closePopapEsc);
-}
-
-// закрытие Popup
-function сlosePopup(elem) {
-  elem.classList.remove('popup_opened');
-  document.removeEventListener('keyup', closePopapEsc);
-}
 
 // добавление значений введенных в форму в соответствующие теги 
 function editProfileSubmit() {
@@ -98,44 +64,31 @@ function editProfileSubmit() {
 
 // создание новой карточки пользователем
 function addCardSubmit(evt) {
-  const card = getCards({name: placeInput.value, link: linkInput.value});
+  const card = new Card({name: placeInput.value, link: linkInput.value}, 'templateCard');
 
-  сardСontainer.prepend(card);
-}
-
-// закрытие попап по нажатию ESC
-function closePopapEsc(evt) {  
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    сlosePopup(popup);
-  }
-}
-
-// открытие Popap-Photo
-function openImagePopap (elem) {  
-  popupPhotoElement.src = elem.link;
-  popupPhotoElement.alt = elem.name;
-  popupPhotoTitle.textContent = elem.name;
-
-  openPopup(popupPhotoContainer); 
+  сardСontainer.prepend(card.getCard());
 }
 
 // проверка форм во время их открытия
-function checkFormDuringOpen(config, formElement) {
-  const inputsList = Array.from(formElement.querySelectorAll(config.inputSelector));
-  const button = formElement.querySelector(config.submitButtonSelector);
+function checkFormDuringOpen(selectors, formElement) {
+  const inputsList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
 
   inputsList.forEach((elem) => {
-    toggleButtonState(inputsList, button, config);
-    hideError(formElement, elem, config);
+    validFormEdit.hideErrorDuringOpen(formElement, elem, selectors);
   });
 }
 
 // открытие Edit-формы
-function openEditForm(config, formElement) {
+function openEditForm(selectors, formElement) {
+  const button = formElement.querySelector('.form__button');
+  
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
-  checkFormDuringOpen(config, formElement);
+
+  button.classList.remove(selectors.inactiveButtonClass);
+  button.removeAttribute('disabled', 'disabled');
+
+  checkFormDuringOpen(selectors, formElement);
 }
 
 // функция закрытия попап при нажатии на оверлей
@@ -158,7 +111,6 @@ function setListenerOverleyPopup() {
 }
 
 setListenerOverleyPopup();
-
 
 //  СЧИТЫВАЕМ СОБЫТИЯ
 
