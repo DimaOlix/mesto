@@ -23,6 +23,11 @@ export class FormValidator {
     errorElement.textContent = '';
   }
 
+  disablingButtonDuringOpen(button, selectors) {
+    button.classList.add(selectors.inactiveButtonClass);
+    button.setAttribute('disabled', 'disabled');
+  }
+
   _setEventListeners() {
     const inputsList = Array.from(this._form.querySelectorAll(this._formSelectors.inputSelector));
     const buttonElement = this._form.querySelector(this._formSelectors.submitButtonSelector);

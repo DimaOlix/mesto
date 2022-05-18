@@ -5,8 +5,6 @@ import {allSelectorsForm} from './arrawSelectors.js';
 import {openPopup} from './utils.js';
 import {сlosePopup} from './utils.js';
 
-// создание переменных
-
 // переменные для кнопок и полей с информацией в profile
 const nameAria = document.querySelector('.profile__name');
 const activityAria = document.querySelector('.profile__activity');
@@ -37,13 +35,6 @@ const buttonClosePopupPhoto = document.querySelector('.popup__close_type_image')
 // переменные для template
 const сardСontainer = document.querySelector('.elements__container');
 
-// создание наследников класса валидации формы
-const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
-const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
-
-validFormEdit.enableValidation()
-validFormAdd.enableValidation()
-
 // добавление карточек из массива при загрузке
 function renderCard() {
   initialCards.forEach((item) => {
@@ -55,6 +46,13 @@ function renderCard() {
 }
 
 renderCard();
+
+// создание наследников класса валидации формы
+const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
+const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
+
+validFormEdit.enableValidation()
+validFormAdd.enableValidation()
 
 // добавление значений введенных в форму в соответствующие теги 
 function editProfileSubmit() {
@@ -85,17 +83,8 @@ function openEditForm(selectors, formElement) {
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
 
-  button.classList.remove(selectors.inactiveButtonClass);
-  button.removeAttribute('disabled', 'disabled');
-
+  validFormEdit.disablingButtonDuringOpen(button, selectors);
   checkFormDuringOpen(selectors, formElement);
-}
-
-// функция закрытия попап при нажатии на оверлей
-function closeOverleyPopup(evt) {
-  if (evt.target === evt.currentTarget) {
-    сlosePopup(evt.currentTarget);
-  }
 }
 
 // функция добавления слушателей на оверлей для закрытия попап
@@ -103,7 +92,7 @@ function setListenerOverleyPopup() {
   const popupsList = document.querySelectorAll('.popup');
   
   popupsList.forEach((popup) => {
-
+    
     popup.addEventListener('click', (evt) => {
       closeOverleyPopup(evt);
     });
@@ -111,6 +100,13 @@ function setListenerOverleyPopup() {
 }
 
 setListenerOverleyPopup();
+
+// функция закрытия попап при нажатии на оверлей
+function closeOverleyPopup(evt) {
+  if (evt.target === evt.currentTarget) {
+    сlosePopup(evt.currentTarget);
+  }
+}
 
 //  СЧИТЫВАЕМ СОБЫТИЯ
 
