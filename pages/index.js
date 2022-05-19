@@ -35,11 +35,16 @@ const buttonClosePopupPhoto = document.querySelector('.popup__close_type_image')
 // переменные для template
 const сardСontainer = document.querySelector('.elements__container');
 
+// функция создания 
+function creatureCard(item, selector) {
+  const card = new Card(item, selector);
+  return card.getCard();
+}
+
 // добавление карточек из массива при загрузке
 function renderCard() {
   initialCards.forEach((item) => {
-    const card = new Card(item, 'templateCard');
-    const cardElem = card.getCard()
+    const cardElem = creatureCard(item, 'templateCard');
     
     сardСontainer.append(cardElem);
   });
@@ -51,8 +56,8 @@ renderCard();
 const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
 const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
 
-validFormEdit.enableValidation()
-validFormAdd.enableValidation()
+validFormEdit.enableValidation();
+validFormAdd.enableValidation();
 
 // добавление значений введенных в форму в соответствующие теги 
 function editProfileSubmit() {
@@ -61,30 +66,20 @@ function editProfileSubmit() {
 }
 
 // создание новой карточки пользователем
-function addCardSubmit(evt) {
-  const card = new Card({name: placeInput.value, link: linkInput.value}, 'templateCard');
+function addCardSubmit() {
+  const card = creatureCard({name: placeInput.value, link: linkInput.value}, 'templateCard');
 
-  сardСontainer.prepend(card.getCard());
-}
-
-// проверка форм во время их открытия
-function checkFormDuringOpen(selectors, formElement) {
-  const inputsList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
-
-  inputsList.forEach((elem) => {
-    validFormEdit.hideErrorDuringOpen(formElement, elem, selectors);
-  });
+  сardСontainer.prepend(card);
 }
 
 // открытие Edit-формы
 function openEditForm(selectors, formElement) {
-  const button = formElement.querySelector('.form__button');
   
   nameInput.value = nameAria.textContent;
   activityInput.value = activityAria.textContent;
 
-  validFormEdit.disablingButtonDuringOpen(button, selectors);
-  checkFormDuringOpen(selectors, formElement);
+  validFormEdit.disablingButtonDuringOpen();
+  validFormEdit.checkFormDuringOpen();
 }
 
 // функция добавления слушателей на оверлей для закрытия попап
@@ -124,7 +119,7 @@ formClose.addEventListener('click', function() {
 // открытие попап add
 buttonAdd.addEventListener('click', function() {
   formAddElement.reset();
-  checkFormDuringOpen(allSelectorsForm, formAddElement);
+  validFormAdd.checkFormDuringOpen();
   openPopup(popupAddElement);
 });
 
@@ -144,9 +139,9 @@ formEditElement.addEventListener('submit', function() {
   сlosePopup(popupEditElement);
 });
  
-formAddElement.addEventListener('submit', function(evt) {
-  addCardSubmit(evt);
-  buttonAddForm.setAttribute('disabled', 'disabled');
+formAddElement.addEventListener('submit', function() {
+  addCardSubmit();
+  validFormAdd.disablingButtonDuringOpen();
   сlosePopup(popupAddElement);
   formAddElement.reset();
 });

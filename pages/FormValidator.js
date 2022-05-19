@@ -16,15 +16,25 @@ export class FormValidator {
     this._setEventListeners();
   }
 
-  hideErrorDuringOpen(form, input, selectors) {
-    const errorElement = form.querySelector(`#${input.id}-error`);
-    
-    input.classList.remove(selectors.inputErrorClass);
+  checkFormDuringOpen() {
+    const inputsList = Array.from(this._form.querySelectorAll(this._formSelectors.inputSelector));
+  
+    inputsList.forEach((elem) => {
+      this.hideErrorDuringOpen(elem);
+    });
+  }
+
+  hideErrorDuringOpen(input) {
+    const errorElement = this._form.querySelector(`#${input.id}-error`);
+
+    input.classList.remove(this._formSelectors.inputErrorClass);
     errorElement.textContent = '';
   }
 
-  disablingButtonDuringOpen(button, selectors) {
-    button.classList.add(selectors.inactiveButtonClass);
+  disablingButtonDuringOpen() {
+    const button = this._form.querySelector(this._formSelectors.submitButtonSelector);
+
+    button.classList.add(this._formSelectors.inactiveButtonClass);
     button.setAttribute('disabled', 'disabled');
   }
 
@@ -46,8 +56,7 @@ export class FormValidator {
 
   _toggleButtonState(inputs, button, selectors) {
     if (this._hasInvalidInput(inputs)) {
-      button.classList.add(selectors.inactiveButtonClass);
-      button.setAttribute('disabled', 'disabled');
+      this.disablingButtonDuringOpen(button, selectors);
     } else {
       button.classList.remove(selectors.inactiveButtonClass);
       button.removeAttribute('disabled', 'disabled');
