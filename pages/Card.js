@@ -2,15 +2,17 @@ import {
   popupPhotoContainer, 
   popupPhotoElement, 
   popupPhotoTitle, 
-  openPopup,
+  // openPopup,
 } from './utils.js';
 
 export class Card {
 
+  _open;
   _dataForСard;
   _template;
   
-  constructor(dataForСard, template) {
+  constructor(dataForСard, template, {open}) {
+    this._open = open;
     this._dataForСard = dataForСard;
     this._template = template;
   }
@@ -34,7 +36,7 @@ export class Card {
   _setEventListener() {
     this.card.querySelector('.element__delete').addEventListener('click', () => this._deletCard());
     this.card.querySelector('.element__like').addEventListener('click', () => this._getLikeCard());
-    this.card.querySelector('.element__image').addEventListener('click', () => this._openImagePopap());
+    this.card.querySelector('.element__image').addEventListener('click', (evt) => this._open(evt));
   }
 
   _deletCard() {
@@ -45,11 +47,11 @@ export class Card {
     this.card.querySelector('.element__like').classList.toggle('element__like_active');
   }
 
-  _openImagePopap() {
-    popupPhotoElement.src = this.card.querySelector('.element__image').src;
-    popupPhotoElement.alt = this.card.querySelector('.element__image').alt;
-    popupPhotoTitle.textContent = this.card.querySelector('.element__image').alt;
+  // _openImagePopap() {
+  //   popupPhotoElement.src = this.card.querySelector('.element__image').src;
+  //   popupPhotoElement.alt = this.card.querySelector('.element__image').alt;
+  //   popupPhotoTitle.textContent = this.card.querySelector('.element__image').alt;
   
-    openPopup(popupPhotoContainer); 
-  }
+  //   openPopup(popupPhotoContainer); 
+  // }
 }
