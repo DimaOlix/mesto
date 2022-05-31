@@ -8,7 +8,6 @@ export default class Section {
     this._items = items;
     this._container = document.querySelector(containerSelector);
     this._renderer = renderer;
-
   }
 
   renderCards() {
@@ -23,6 +22,5 @@ export default class Section {
     } else {
       this._container.prepend(elem);
     }
-
   }
 }

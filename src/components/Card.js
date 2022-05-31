@@ -27,9 +27,12 @@ export default class Card {
   }
 
   _setEventListener() {
-    this.card.querySelector('.element__delete').addEventListener('click', () => this._deletCard());
-    this.card.querySelector('.element__like').addEventListener('click', () => this._getLikeCard());
-    this.card.querySelector('.element__image').addEventListener('click', (evt) => this._handleCardClick(evt));
+    this.card.querySelector('.element__delete')
+    .addEventListener('click', () => this._deletCard());
+    this.card.querySelector('.element__like')
+    .addEventListener('click', () => this._getLikeCard());
+    this.card.querySelector('.element__image')
+    .addEventListener('click', (evt) => this._handleCardClick(evt));
   }
 
   _deletCard() {

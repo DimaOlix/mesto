@@ -2,5 +2,5 @@
   margin: auto 30px auto 21px;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 }

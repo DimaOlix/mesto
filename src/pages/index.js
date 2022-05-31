@@ -1,13 +1,13 @@
-// import './index.css';
+import './index.css';
 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
-import {initialCards} from '../utils/cards.js';
-import {allSelectorsForm} from '../utils/arrawSelectors.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import {initialCards} from '../utils/cards.js';
+import {allSelectorsForm} from '../utils/arrawSelectors.js';
 import {
   buttonEdit,
   buttonAdd,
@@ -24,7 +24,7 @@ const userInfo = new UserInfo({
 });
 
 
-
+// добавление карточек при загрузке из массива
 const addCardLoad = new Section({ items: initialCards, 
   renderer: (item, selector) => {
     const card = new Card(item, selector, { handleCardClick: (evt) => {
@@ -54,41 +54,39 @@ const popupImage = new PopupWithImage('.popup_type_photo', '.templateCard');
 popupImage.setEventListeners();
 
 
-
-const popupEditForm = new PopupWithForm('.popup_type_edit', { submitForm: (inputsValue) => {
-  userInfo.setUserInfo(inputsValue['name-input'], inputsValue['activity-input']);
+// экземпляр класса для редактирования данных пользователя
+const popupEditForm = new PopupWithForm('.popup_type_edit', 
+  { submitForm: (value) => {
+  userInfo.setUserInfo(value['name-input'], value['activity-input']);
 
   popupEditForm.close();  
 } });
 
-popupEditForm.setEventListeners();
-
-
-
-const popupAddForm = new PopupWithForm('.popup_type_add', { submitForm: (inputsValue) => {
+// экземпляр класса для добавления карточек пользователем
+const popupAddForm = new PopupWithForm('.popup_type_add', 
+{ submitForm: (inputsValue) => {
   
     const addCardSubmit = new Section({
       items: [{
         name: inputsValue['place-input'], 
         link: inputsValue['link-input']
-      }], 
+      }],
+      // принимает карточку и отрисовывает ее
       renderer: (item, selector) => {
+        // создает и возвращает карточку
         const card = new Card( item, selector, { handleCardClick: (evt) => {
           popupImage.open(evt);
         } 
-      });
-      
-        const cardUser = card.getCard();
-        
+      });   
+        const cardUser = card.getCard();        
         addCardSubmit.addItem(cardUser);
       }
     }, '.elements__container');
 
     addCardSubmit.renderCards();
-    popupAddForm.close();  
 } });
 
-popupAddForm.setEventListeners();
+
 
 // открытие Edit-формы
 function openEditForm() {
@@ -109,6 +107,7 @@ function openEditForm() {
 buttonEdit.addEventListener('click', () => {
   openEditForm();
   popupEditForm.open();
+  popupEditForm.setEventListeners();
 });
 
 
@@ -117,6 +116,6 @@ buttonAdd.addEventListener('click', () => {
   formAddElement.reset();
   validFormAdd.checkFormDuringOpen();
   validFormAdd.disablingButtonDuringOpen();
-
   popupAddForm.open();
+  popupAddForm.setEventListeners();
 });
