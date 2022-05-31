@@ -1,18 +1,11 @@
-import {
-  popupPhotoContainer, 
-  popupPhotoElement, 
-  popupPhotoTitle, 
-  // openPopup,
-} from './utils.js';
+export default class Card {
 
-export class Card {
-
-  _open;
+  _handleCardClick;
   _dataForСard;
   _template;
   
-  constructor(dataForСard, template, {open}) {
-    this._open = open;
+  constructor(dataForСard, template, {handleCardClick}) {
+    this._handleCardClick = handleCardClick;
     this._dataForСard = dataForСard;
     this._template = template;
   }
@@ -36,7 +29,7 @@ export class Card {
   _setEventListener() {
     this.card.querySelector('.element__delete').addEventListener('click', () => this._deletCard());
     this.card.querySelector('.element__like').addEventListener('click', () => this._getLikeCard());
-    this.card.querySelector('.element__image').addEventListener('click', (evt) => this._open(evt));
+    this.card.querySelector('.element__image').addEventListener('click', (evt) => this._handleCardClick(evt));
   }
 
   _deletCard() {
