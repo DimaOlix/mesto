@@ -42,12 +42,4 @@ export default class Card {
   _getLikeCard() {
     this.card.querySelector('.element__like').classList.toggle('element__like_active');
   }
-
-  // _openImagePopap() {
-  //   popupPhotoElement.src = this.card.querySelector('.element__image').src;
-  //   popupPhotoElement.alt = this.card.querySelector('.element__image').alt;
-  //   popupPhotoTitle.textContent = this.card.querySelector('.element__image').alt;
-  
-  //   openPopup(popupPhotoContainer); 
-  // }
 }

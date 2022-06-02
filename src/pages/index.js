@@ -18,10 +18,19 @@ import {
 } from '../utils/utils.js';
 
 
+
 const userInfo = new UserInfo({
   nameSelector: '.profile__name', 
   activitySelector: '.profile__activity'
 });
+
+
+// создание наследников класса валидации формы
+const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
+const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
+
+validFormEdit.enableValidation();
+validFormAdd.enableValidation();
 
 
 // добавление карточек при загрузке из массива
@@ -40,27 +49,26 @@ const addCardLoad = new Section({ items: initialCards,
 addCardLoad.renderCards()
 
 
-// создание наследников класса валидации формы
-const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
-const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
-
-validFormEdit.enableValidation();
-validFormAdd.enableValidation();
 
 
-
+// экземпляр кдасса попапа с картинкой
 const popupImage = new PopupWithImage('.popup_type_photo', '.templateCard');
 
 popupImage.setEventListeners();
 
 
+
 // экземпляр класса для редактирования данных пользователя
 const popupEditForm = new PopupWithForm('.popup_type_edit', 
   { submitForm: (value) => {
-  userInfo.setUserInfo(value['name-input'], value['activity-input']);
+    userInfo.setUserInfo( value['name-input'], value['activity-input'] );
+  } 
+  });
 
-  popupEditForm.close();  
-} });
+popupEditForm.setEventListeners();
+
+
+
 
 // экземпляр класса для добавления карточек пользователем
 const popupAddForm = new PopupWithForm('.popup_type_add', 
@@ -82,9 +90,12 @@ const popupAddForm = new PopupWithForm('.popup_type_add',
         addCardSubmit.addItem(cardUser);
       }
     }, '.elements__container');
-
+    
     addCardSubmit.renderCards();
-} });
+   
+  } });  
+
+popupAddForm.setEventListeners();
 
 
 
@@ -107,9 +118,7 @@ function openEditForm() {
 buttonEdit.addEventListener('click', () => {
   openEditForm();
   popupEditForm.open();
-  popupEditForm.setEventListeners();
 });
-
 
 // открытие попап add
 buttonAdd.addEventListener('click', () => {
@@ -117,5 +126,4 @@ buttonAdd.addEventListener('click', () => {
   validFormAdd.checkFormDuringOpen();
   validFormAdd.disablingButtonDuringOpen();
   popupAddForm.open();
-  popupAddForm.setEventListeners();
 });
