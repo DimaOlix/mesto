@@ -17,10 +17,10 @@ export default class Section {
   }
 
   addItem(elem) {
-    if(this._items.length > 1) {
-      this._container.append(elem);
-    } else {
-      this._container.prepend(elem);
-    }
+    this._container.append(elem);
+  }
+
+  addUserItem(elem) {
+    this._container.prepend(elem);
   }
 }

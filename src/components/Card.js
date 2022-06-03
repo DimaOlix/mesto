@@ -21,9 +21,9 @@ export default class Card {
   }
 
   _setValuesCard() {
-    this.card.querySelector('.element__title').textContent = this._dataForСard.name;
+    this.card.querySelector('.element__title').textContent = this._dataForСard.place;
     this.card.querySelector('.element__image').src = this._dataForСard.link;
-    this.card.querySelector('.element__image').alt = this._dataForСard.name;
+    this.card.querySelector('.element__image').alt = this._dataForСard.place;
   }
 
   _setEventListener() {

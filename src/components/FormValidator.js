@@ -31,7 +31,7 @@ export default class FormValidator {
     errorElement.textContent = '';
   }
 
-  disablingButtonDuringOpen() {
+  disablingButton() {
     const button = this._form.querySelector(this._formSelectors.submitButtonSelector);
 
     button.classList.add(this._formSelectors.inactiveButtonClass);
@@ -56,7 +56,7 @@ export default class FormValidator {
 
   _toggleButtonState(inputs, button, selectors) {
     if (this._hasInvalidInput(inputs)) {
-      this.disablingButtonDuringOpen(button, selectors);
+      this.disablingButton(button, selectors);
     } else {
       button.classList.remove(selectors.inactiveButtonClass);
       button.removeAttribute('disabled', 'disabled');
