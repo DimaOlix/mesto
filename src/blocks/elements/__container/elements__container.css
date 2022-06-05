@@ -1,5 +1,6 @@
 .elements__container {
   max-width: 880px;
+  min-height: 20vh;
   margin: 0 auto;
   list-style-type: none;
   box-sizing: border-box;

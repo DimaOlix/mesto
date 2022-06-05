@@ -30,14 +30,22 @@ const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
 validFormEdit.enableValidation();
 validFormAdd.enableValidation();
 
-// добавление карточек при загрузке из массива
-const addCardLoad = new Section({ items: initialCards, 
-  renderer: (item, selector) => {
+// создание карточек со слушителями
+function creatureCard(item, selector) {
     const card = new Card(item, selector, { handleCardClick: (evt) => {
       popupImage.open(evt);
     } 
   });
-    const cardElement = card.getCard();
+  const cardElement = card.getCard();
+
+  return cardElement;
+}
+
+// добавление карточек при загрузке из массива
+const addCardLoad = new Section({ items: initialCards, 
+  renderer: (item, selector) => {
+
+    const cardElement = creatureCard(item, selector);
     addCardLoad.addItem(cardElement);
   }
 }, '.elements__container');
@@ -69,11 +77,7 @@ const popupAddForm = new PopupWithForm('.popup_type_add',
   // пустые карточки во время плавного закрытия формы
   validFormAdd.disablingButton();
 
-  const cardUser = new Card( inputsValue, 'templateCard', { handleCardClick: (evt) => {
-      popupImage.open(evt);
-    }    
-  });
-  const cardElement = cardUser.getCard();
+  const cardElement = creatureCard(inputsValue, 'templateCard');
   addCardLoad.addUserItem(cardElement);
   } 
 });  
