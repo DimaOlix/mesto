@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Место</title>
+  <script defer src="main.js"></script><link href="main.css" rel="stylesheet"></head>
+
+  <body class="page">
+
+    <section class="header">
+      <img class="header__logo" src="bbe2a6eafac19c3d031c.svg" alt="Логотип">
+    </section>
+
+    <section class="profile">
+      <img class="profile__avatar" src="6163c2039d1f0eb8d7ca.jpg" alt="Фото Жака-Ива Кусто">
+      <h1 class="profile__name">Жак-Ив Кусто</h1>
+      <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
+      <p class="profile__activity">Исследователь океана</p>
+      <button type="button" class="profile__add-button" aria-label="Добавить"></button>
+    </section>
+
+    <section class="elements">
+      <ul class="elements__container"></ul>
+    </section>
+
+    <footer class="footer">
+      <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+
+    <div class="popup popup_type_edit">
+      <div class="popup__container">
+        
+        <button
+        class="popup__close popup__close_type_edit"
+        type="button"
+        aria-label="Закрыть"></button>
+
+        <h2 class="popup__title">Редактировать профиль</h2>
+        
+        <form class="form form_type_edit" name="popup-editor" novalidate>
+          
+          <input 
+          class="form__input form__input_value_name"
+          type="text"
+          name="input-name"
+          id="name-input"
+          required
+          minlength="2"
+          maxlength="40"
+          >
+          <span 
+          class="form__input-error form__input-error_position_top"
+          id="name-input-error"></span>
+          
+          <input
+          class="form__input form__input_value_activity"  
+          type="text"
+          name="input-activity"
+          id="activity-input"
+          required
+          minlength="2"
+          maxlength="200"
+          >
+          <span 
+          class="form__input-error form__input-error_position_button"
+          id="activity-input-error"></span>
+          <button class="form__button" type="submit" name="save-button">Сохранить</button>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="popup popup_type_add">
+      <div class="popup__container">
+        
+        <button
+        class="popup__close popup__close_type_add"
+        type="button"
+        aria-label="Закрыть"></button>
+
+        <h2 class="popup__title">Новое место</h2>
+        
+        <form class="form form_type_add" name="add-popup-editor" novalidate>
+          <input
+          class="form__input form__input_value_place"
+          type="text"
+          id="place-input"
+          required
+          minlength="2"
+          maxlength="30"
+          name="place"
+          placeholder="Название"
+          >
+          <span 
+          class="form__input-error form__input-error_position_top"
+          id="place-input-error"></span>
+
+          <input
+          class="form__input form__input_value_link"
+          type="url"
+          required
+          id="link-input"
+          name="link"
+          placeholder="Ссылка на картинку"
+          >
+          <span 
+          class="form__input-error form__input-error_position_button"
+          id="link-input-error"></span>
+
+          <button
+          class="form__button"
+          type="submit"
+          name="save-button">Создать</button>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div class="popup popup_type_photo">
+      <div class="popup__container-photo">
+        
+        <button
+        class="popup__close popup__close_type_image"
+        type="button"
+        aria-label="Закрыть"></button>
+        
+        <img class="popup__photo-element" src="#" alt="картинка">
+        <h3 class="popup__title-photo"></h3>
+      </div>
+    </div>
+
+    <template class="templateCard">
+      <li class="element">
+        
+        <button
+        class="element__delete"
+        type="button"
+        aria-label="Удалить фото"></button>
+
+        <img src="#" class="element__image" alt="картинка">
+        <div class="element__content">
+          <h2 class="element__title"></h2>
+          
+          <button
+          class="element__like"
+          type="button"
+          aria-label="Лайк"></button>
+          
+        </div>
+      </li>
+    </template>
+    
+  </body>
+</html>
