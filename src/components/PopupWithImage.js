@@ -8,10 +8,13 @@ export default class PopupWithImage extends Popup {
     this._popupPhotoTitle = this._popup.querySelector('.popup__title-photo');
   }
 
-  open(evt) {
-    this._popupPhotoElement.src = evt.target.src;
-    this._popupPhotoElement.alt = evt.target.alt;
-    this._popupPhotoTitle.textContent = evt.target.alt;
+  open(card) {
+    const photoCard = card.querySelector('.element__image');
+
+    this._popupPhotoElement.src = photoCard.src;
+    this._popupPhotoElement.alt = photoCard.alt;
+    this._popupPhotoTitle.textContent = photoCard.alt;
+    
     super.open();
   }
 }

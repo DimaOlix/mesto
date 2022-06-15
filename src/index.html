@@ -14,9 +14,9 @@
 
     <section class="profile">
       <img class="profile__avatar" src="<%=require('./images/image.jpg')%>" alt="Фото Жака-Ива Кусто">
-      <h1 class="profile__name">Жак-Ив Кусто</h1>
+      <h1 class="profile__name"></h1>
       <button class="profile__edit-button" type="button" aria-label="Изменить"></button>
-      <p class="profile__activity">Исследователь океана</p>
+      <p class="profile__activity"></p>
       <button type="button" class="profile__add-button" aria-label="Добавить"></button>
     </section>
 
@@ -65,7 +65,9 @@
           <span 
           class="form__input-error form__input-error_position_button"
           id="activity-input-error"></span>
-          <button class="form__button" type="submit" name="save-button">Сохранить</button>
+          <button class="form__button" 
+          type="submit" 
+          name="save-button">Сохранить</button>
         </form>
 
       </div>
@@ -131,6 +133,41 @@
       </div>
     </div>
 
+    <div class="popup popup_type_confirmation">
+      <div class="popup__container">
+        <button class="popup__close popup__close_type_confirmation"
+        type="button"
+        aria-label="Закрыть"></button>
+        <h2 class="popup__title-confirmation">Вы уверены?</h2>
+        <form class="form form_type_confirmation" name="confirmation-form">
+          <button class="form__button"
+          type="submit"
+          name="confirmation-button">Да</button>
+        </form>
+     </div>
+    </div>
+
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <button class="popup__close popup__close_type_avatar"
+        type="button"
+        aria-label="Закрыть"></button>
+        <form class="form form_type_avatar" name="avatar-form">
+          <input
+          class="form__input form__input_value_link"
+          type="url"
+          required
+          id="link-input"
+          name="link"
+          placeholder="Ссылка на фотографию"
+          >
+          <button class="form__button"
+          type="submit"
+          name="avatar-button">Сохранить</button>
+        </form>
+     </div>
+    </div>
+
     <template class="templateCard">
       <li class="element">
         
@@ -143,10 +180,13 @@
         <div class="element__content">
           <h2 class="element__title"></h2>
           
-          <button
-          class="element__like"
-          type="button"
-          aria-label="Лайк"></button>
+          <div class="element__like-content">
+            <button
+            class="element__like"
+            type="button"
+            aria-label="Лайк"></button>
+            <p class="element__like-quantity"></p>
+          </div>
           
         </div>
       </li>

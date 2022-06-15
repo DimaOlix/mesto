@@ -1,8 +1,5 @@
 export default class UserInfo {
 
-  _name;
-  _activity;
-
   constructor({nameSelector, activitySelector}) {
     this._userName = document.querySelector(nameSelector);
     this._userActivity = document.querySelector(activitySelector);
@@ -19,5 +16,10 @@ export default class UserInfo {
     this._userName.textContent = userName;
     this._userActivity.textContent = userActivity;
   }
-  
+
+  setUserInfoLoad(userInfo, userAvatar) {
+    this._userName.textContent = userInfo.name;
+    this._userActivity.textContent = userInfo.about;
+    userAvatar.src = userInfo.avatar;
+  }  
 }

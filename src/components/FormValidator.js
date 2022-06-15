@@ -21,8 +21,6 @@ export default class FormValidator {
     });
   }
 
-
-
   disablingButton() {
     this._button.classList.add(this._formSelectors.inactiveButtonClass);
     this._button.setAttribute('disabled', 'disabled');
