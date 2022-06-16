@@ -73,7 +73,6 @@ export default class Api {
     .then((result) => {
       return result;
     })
-
   }
 
   addCard(title, link) {
