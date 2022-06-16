@@ -12,9 +12,9 @@
 
 .profile__avatar::before {
   content: "";
-  top: 0; 
-  left: 0; 
-  right: 0; 
+  top: 0;
+  left: 0;
+  right: 0;
   bottom: 0;
   border-radius: 50%;
   background-color: rgb(0, 0, 0);
@@ -42,7 +42,6 @@
 .profile__avatar:hover::after {
   opacity: .8;
 }
-
 
 @media all and (max-width: 585px){
   .profile__avatar {
