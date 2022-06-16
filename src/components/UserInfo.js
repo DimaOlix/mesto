@@ -1,8 +1,9 @@
 export default class UserInfo {
 
-  constructor({nameSelector, activitySelector}) {
+  constructor({nameSelector, activitySelector, avatarSelector}) {
     this._userName = document.querySelector(nameSelector);
     this._userActivity = document.querySelector(activitySelector);
+    this._fieldUserAvatar = document.querySelector(avatarSelector);
   }
 
   getUserInfo() {
@@ -17,9 +18,13 @@ export default class UserInfo {
     this._userActivity.textContent = userActivity;
   }
 
-  setUserInfoLoad(userInfo, userAvatar) {
+  setUserInfoLoad(userInfo) {
     this._userName.textContent = userInfo.name;
     this._userActivity.textContent = userInfo.about;
-    userAvatar.src = userInfo.avatar;
-  }  
+    this._fieldUserAvatar.style.backgroundImage  = `url(${userInfo.avatar})`;
+  }
+
+  setUserAvatar(userAvatar) {
+    this._fieldUserAvatar.style.backgroundImage = `url(${userAvatar.avatar})`;
+  }
 }

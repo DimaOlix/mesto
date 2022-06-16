@@ -12,6 +12,7 @@ export {
   nameInput,
   activityInput,
   userAvatar,
+  formAddAvatar,
 };
 
 const userAvatar = document.querySelector('.profile__avatar');
@@ -36,3 +37,6 @@ const formAddElement = popupAddElement.querySelector('.form_type_add');
 const popupPhotoContainer = document.querySelector('.popup_type_photo');
 const popupPhotoElement = document.querySelector('.popup__photo-element');
 const popupPhotoTitle = document.querySelector('.popup__title-photo');
+
+// форма редактирования аватара
+const formAddAvatar = document.querySelector('.form_type_avatar');

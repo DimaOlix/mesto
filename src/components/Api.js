@@ -2,26 +2,6 @@ export default class Api {
   constructor(url, token) {
     this.url = url;
     this.token = token;
-
-  }
-
-  getUserInfo() {
-    return fetch(this.url, {
-      headers: {
-        'Content-type': 'application/json', 
-        authorization: this.token
-      }
-    })
-    .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
-    })
-    .then((result) => {
-      return result;
-    })
   }
 
   getInfo() {
@@ -45,7 +25,7 @@ export default class Api {
   }
 
   editUserInfo(name, about) {
-  
+
     return fetch( this.url, {
       method: 'PATCH',
       headers: {
@@ -66,14 +46,38 @@ export default class Api {
       }
     })
     .then((result) => {
-      console.log(result)
+      return result;
+    })
+  }
+
+  editAvatar(link) {
+
+    return fetch( this.url, {
+      method: 'PATCH',
+      headers: {
+        authorization: this.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: link,
+      })
+    })
+
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        return Promise.reject('Ошбка');  
+      }
+    })
+    .then((result) => {
       return result;
     })
 
   }
 
   addCard(title, link) {
-  
+
     return fetch( this.url, {
       method: 'POST',
       headers: {
@@ -140,7 +144,7 @@ export default class Api {
       return result;
     })
   }
-  
+
   removeLikeCard(cardId) {
     return fetch( `${this.url}${cardId}/likes`, {
       method: 'DELETE',

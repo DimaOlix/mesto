@@ -9,7 +9,6 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithСonfirmation from '../components/PopupWithСonfirmation.js';
 import UserInfo from '../components/UserInfo.js';
-import {initialCards} from '../utils/cards.js';
 import {allSelectorsForm} from '../utils/arrawSelectors.js';
 import {
   buttonEdit,
@@ -19,54 +18,87 @@ import {
   nameInput,
   activityInput,
   userAvatar,
+  formAddAvatar,
 } from '../utils/utils.js';
 
 const apiCards = new Api(
   'https://mesto.nomoreparties.co/v1/cohort-43/cards',
   '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-  )
+)
+  
+const apiEditUserInfo = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/users/me',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
+  
+const apiAddCard = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/cards',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
+  
+const apiDeleteCard = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/cards/',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
+  
+const apiHandleLikeCard = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/cards/',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
+  
+const apiEditAvatar = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
 
+const apiUserInfo = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-43/users/me',
+  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
+)
+  
+const userInfo = new UserInfo({
+    nameSelector: '.profile__name',
+    activitySelector: '.profile__activity',
+    avatarSelector: '.profile__avatar',
+  });
+
+  // получение и установка информации о пользователе
+  apiUserInfo.getInfo()
+  .then((res) => {
+    userInfo.setUserInfoLoad(res);
+  })
+  .catch();
+
+// запрос данных о лайках на карточках при загрузке
 apiCards.getInfo()
 .then((res) => {
-  console.log(res)
   res.forEach((elem) => {
     if(elem.likes._id === '52bbf82811a0c0fa24ba931d') {
     like.classList.add('element__like_active');
-
   }
   });
   addCard.renderCards(res);
 })
 .catch((err) => console.log(err));
 
-const apiEditUserInfo = new Api(
-'https://mesto.nomoreparties.co/v1/cohort-43/users/me',
-'0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-)
+// экземпляр класса для отрисовки карточек
+const addCard = new Section( {
+  renderer: (items, item, selector) => {
+    const cardElement = creatureCard(item, selector);
+    renderCard(items, cardElement);
+  }
+}, '.elements__container');
 
-const apiAddCard = new Api(
-'https://mesto.nomoreparties.co/v1/cohort-43/cards',
-'0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-)
+// выбор добавления карт append/prepend
+function renderCard(items, card) {
+  if(items.length > 1) {
+    addCard.addItem(card);
+  } else {
+    addCard.addUserItem(card);
+  }
+}
 
-const apiDeleteCard = new Api(
-'https://mesto.nomoreparties.co/v1/cohort-43/cards/',
-'0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-)
-
-const userInfo = new UserInfo({
-  nameSelector: '.profile__name',
-  activitySelector: '.profile__activity'
-});
-
-
-
-const apiHandleLikeCard = new Api(
-  'https://mesto.nomoreparties.co/v1/cohort-43/cards/',
-  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-  )
-
-
+// функция управления лайком карты
 function handleLikeCard(cardItem) {
   const like = cardItem.querySelector('.element__like');
   const likeQuantity = cardItem.querySelector('.element__like-quantity');
@@ -88,8 +120,7 @@ function handleLikeCard(cardItem) {
   }
 }
 
-
-// создание карточек со слушителями
+// функция создания карточек со слушителями
 function creatureCard(item, selector) {
     const card = new Card('52bbf82811a0c0fa24ba931d', item, selector, {
       handleDelete: () => {
@@ -119,65 +150,19 @@ function creatureCard(item, selector) {
   return cardElement;
 }
 
-
-
-function renderCard(items, card) {
-  if(items.length > 1) {
-    addCard.addItem(card);
-  } else {
-    addCard.addUserItem(card);
-  }
-}
-
-const apiUserInfo = new Api(
-  'https://mesto.nomoreparties.co/v1/cohort-43/users/me',
-  '0cd5671f-d9e2-44a6-902a-4db007f7a8f2'
-  )
-
-apiUserInfo.getInfo()
-.then((res) => {
-  userInfo.setUserInfoLoad(res, userAvatar);
-})
-.catch();
-
-// добавление карточек при загрузке страницы
-const addCard = new Section( {
-  renderer: (items, item, selector) => {
-    const cardElement = creatureCard(item, selector);
-    renderCard(items, cardElement);
-  }
-}, '.elements__container');
-
-  
-
-
-
 // экземпляр класса для подтверждения удаления карточки
 const popupСonfirmationForm = new PopupWithСonfirmation('.popup_type_confirmation');
 
 popupСonfirmationForm.setEventListeners();
 
-
-
-
-
-
-
-
-
-
-
-
-
 // создание наследников класса валидации формы
 const validFormEdit = new FormValidator(allSelectorsForm, formEditElement);
 const validFormAdd = new FormValidator(allSelectorsForm, formAddElement);
+const validFormAvatar = new FormValidator(allSelectorsForm, formAddAvatar);
 
 validFormEdit.enableValidation();
 validFormAdd.enableValidation();
-
-
-
+validFormAvatar.enableValidation();
 
 // экземпляр кдасса попапа с картинкой
 const popupImage = new PopupWithImage('.popup_type_photo', '.templateCard');
@@ -190,18 +175,18 @@ const popupEditForm = new PopupWithForm('.popup_type_edit',
   // метод disablingButton для устранения возможности добавлять 
   // пустые поля в profile во время плавного закрытия формы
       validFormEdit.disablingButton();
+      popupEditForm.changeTextButton();
 
       apiEditUserInfo.editUserInfo(value['input-name'], value['input-activity'])
       .then((res) => {
         userInfo.setUserInfo( res.name, res.about );
+        popupEditForm.refundTextButton('Сохранить');
       })
       .catch((err) => console.log(err))
-
     }
   });
 
 popupEditForm.setEventListeners();
-
 
 // экземпляр класса для добавления карточек пользователем
 const popupAddForm = new PopupWithForm('.popup_type_add', 
@@ -209,23 +194,40 @@ const popupAddForm = new PopupWithForm('.popup_type_add',
   // метод disablingButton для устранения возможности добавлять 
   // пустые карточки во время плавного закрытия формы
     validFormAdd.disablingButton();
+    popupAddForm.changeTextButton();
     
     apiAddCard.addCard(inputsValue.place, inputsValue.link)
     .then((res) => {
-
-      addCard.renderCards([res]);    
-    }) 
+      addCard.renderCards([res]);
+      popupAddForm.refundTextButton('Создать');
+    })
+    .catch((err) => console.log(err))
   } 
 });
 
 popupAddForm.setEventListeners();
 
+// экземпляр класса для изменения аватарки
+const popupAvatrForm = new PopupWithForm('.popup_type_avatar', 
+{ submitForm: (inputsValue) => {
+  // метод disablingButton для устранения возможности добавлять 
+  // пустые карточки во время плавного закрытия формы
+    validFormAdd.disablingButton();
+    popupAvatrForm.changeTextButton();
 
+    apiEditAvatar.editAvatar(inputsValue.link)
+    .then((res) => {
+      userInfo.setUserAvatar(res);
+      popupAvatrForm.refundTextButton('Сохранить');
+    })
+    .catch((err) => console.log(err)) 
+  } 
+});
 
+popupAvatrForm.setEventListeners();
 
-// открытие Edit-формы
+// функция открытия Edit-формы
 function openEditForm() {
-
   const userInfoList = userInfo.getUserInfo();
   
   nameInput.value = userInfoList.userName;
@@ -249,4 +251,12 @@ buttonAdd.addEventListener('click', () => {
   validFormAdd.checkFormDuringOpen();
   validFormAdd.disablingButton();
   popupAddForm.open();
+});
+
+// открытие попап avatar
+userAvatar.addEventListener('click', () => {
+  formAddAvatar.reset();
+  validFormAvatar.checkFormDuringOpen();
+  validFormAvatar.disablingButton();
+  popupAvatrForm.open();
 });
