@@ -1,8 +1,8 @@
 export default class Card {
   
-  constructor(myId, dataForСard, template, {handleDelete}, {handleLikeCard}, {handleCardClick}) {
+  constructor(myId, dataForСard, template, {handleDelete}, {handleLikeClick}, {handleCardClick}) {
     this.handleDelete = handleDelete;
-    this.handleLikeCard = handleLikeCard;
+    this.handleLikeClick = handleLikeClick;
     this._handleCardClick = handleCardClick;
     this._dataForСard = dataForСard;
     this._template = template;
@@ -43,7 +43,7 @@ export default class Card {
     this._card.querySelector('.element__delete')
     .addEventListener('click', () => this.handleDelete(this._card));
     this._card.querySelector('.element__like')
-    .addEventListener('click', () => {this.handleLikeCard(this._card); this._checkMyLike()});
+    .addEventListener('click', () => this.handleLikeClick(this._card));
     this._card.querySelector('.element__image')
     .addEventListener('click', (evt) => this._handleCardClick(evt));
   }
@@ -54,11 +54,23 @@ export default class Card {
   }
 
   _checkMyLike() {
-    this.like = this._card.querySelector('.element__like');
+    this._like = this._card.querySelector('.element__like');
+
     this._dataForСard.likes.forEach((elem) => {
-      if(elem._id === '52bbf82811a0c0fa24ba931d') {
-        this.like.classList.add('element__like_active');
+      if(elem._id === this._myId) {
+        this._like.classList.add('element__like_active');
       }
     })
   }
+
+  addLikeAndQuantity(data, likeQuantity) {
+    likeQuantity.textContent = data.likes.length;
+    this._like.classList.add('element__like_active');
+  }
+
+  removeLikeAndQuantity(data, likeQuantity) {
+    likeQuantity.textContent = data.likes.length;
+    this._like.classList.remove('element__like_active');
+  }
+
 }

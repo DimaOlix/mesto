@@ -4,20 +4,38 @@ export default class Api {
     this.token = token;
   }
 
-  getInfo() {
-    return fetch(this.url, {
+  _getResponseServer(res) {
+    if(res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+
+  getCardsInfo() {
+    return fetch(`${this.url}/cards`, {
       headers: {
         'Content-type': 'application/json', 
         authorization: this.token
       }  
     })
-
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
+    })
+    .then((result) => {
+      return result;
+    })
+  }
+
+  getUserInfo() {
+    return fetch(`${this.url}/users/me`, {
+      headers: {
+        'Content-type': 'application/json', 
+        authorization: this.token
+      }  
+    })
+    .then((res) => {
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -26,7 +44,7 @@ export default class Api {
 
   editUserInfo(name, about) {
 
-    return fetch( this.url, {
+    return fetch( `${this.url}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this.token,
@@ -39,11 +57,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -52,7 +66,7 @@ export default class Api {
 
   editAvatar(link) {
 
-    return fetch( this.url, {
+    return fetch( `${this.url}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this.token,
@@ -64,11 +78,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -77,7 +87,7 @@ export default class Api {
 
   addCard(title, link) {
 
-    return fetch( this.url, {
+    return fetch( `${this.url}/cards`, {
       method: 'POST',
       headers: {
         authorization: this.token,
@@ -90,11 +100,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -102,7 +108,7 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    return fetch( `${this.url}${cardId}`, {
+    return fetch( `${this.url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this.token,
@@ -111,11 +117,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -124,7 +126,7 @@ export default class Api {
 
 
   setLikeCard(cardId) {
-    return fetch( `${this.url}${cardId}/likes`, {
+    return fetch( `${this.url}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: {
         authorization: this.token,
@@ -133,11 +135,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
@@ -145,7 +143,7 @@ export default class Api {
   }
 
   removeLikeCard(cardId) {
-    return fetch( `${this.url}${cardId}/likes`, {
+    return fetch( `${this.url}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: this.token,
@@ -154,11 +152,7 @@ export default class Api {
     })
 
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        return Promise.reject('Ошбка');  
-      }
+      return this._getResponseServer(res);
     })
     .then((result) => {
       return result;
