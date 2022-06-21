@@ -13,8 +13,11 @@ export {
   activityInput,
   userAvatar,
   formAddAvatar,
+  userName
 };
 
+
+const userName = document.querySelector('.profile__name');
 const userAvatar = document.querySelector('.profile__avatar');
 
 // переменные для кнопок и полей с информацией в profile

@@ -18,6 +18,7 @@ import {
   activityInput,
   userAvatar,
   formAddAvatar,
+  userName,
 } from '../utils/utils.js';
 
 const apiServerRequest = new Api(
@@ -29,7 +30,7 @@ const userInfo = new UserInfo({
     nameSelector: '.profile__name',
     activitySelector: '.profile__activity',
     avatarSelector: '.profile__avatar',
-  });
+});
 
 // отресовка карточек только после загрузки 
 // данных пользователя и данных для карточек
@@ -44,13 +45,13 @@ Promise.all([apiServerRequest.getUserInfo(), apiServerRequest.getCardsInfo()])
 const addCard = new Section( {
   renderer: (item) => {
     const cardElement = creatureCard(item, 'templateCard');
-    renderCard(cardElement, item, '52bbf82811a0c0fa24ba931d');
+    renderCard(cardElement, item);
   }
 }, '.elements__container');
 
 // выбор добавления карт append/prepend
-function renderCard(card, datacard, myId) {
-  if(datacard.owner._id === myId) {
+function renderCard(card, datacard) {
+  if(datacard.owner._id === userName.id) {
     addCard.addUserItem(card);
   } else {
     addCard.addItem(card);
@@ -59,7 +60,7 @@ function renderCard(card, datacard, myId) {
 
 // функция создания карточек со слушителями
 function creatureCard(item, selector) {
-    const card = new Card('52bbf82811a0c0fa24ba931d', item, selector, {
+    const card = new Card(userName.id, item, selector, {
       handleDelete: () => {
         popupСonfirmationForm.setSubmitHandler(() => {
           popupСonfirmationForm.changeTextButton();
@@ -77,23 +78,21 @@ function creatureCard(item, selector) {
       }
     },
     {
-      handleLikeClick: (cardItem) => {
-        const like = cardItem.querySelector('.element__like');
-        const likeQuantity = cardItem.querySelector('.element__like-quantity');
-
-        if(!like.classList.contains('element__like_active')) {
-          apiServerRequest.setLikeCard(cardItem.id)
-          .then( (res) => {
-            card.addLikeAndQuantity(res, likeQuantity)
-          } )
-          .catch((err) => console.log(err))
-        } else {
-          apiServerRequest.removeLikeCard(cardItem.id)
-          .then((res) => {
-            card.removeLikeAndQuantity(res, likeQuantity)
-          })
-          .catch((err) => console.log(err))
-        }
+      handleAddLikeClick: (cardItem) => {
+        apiServerRequest.setLikeCard(cardItem.id)
+        .then( (res) => {
+          card.addLikeAndQuantity(res);
+        })
+        .catch((err) => console.log(err))   
+      }
+    },
+    {
+      handleRemoveLikeClick: (cardItem) => {
+        apiServerRequest.removeLikeCard(cardItem.id)
+        .then((res) => {
+          card.removeLikeAndQuantity(res);
+        })
+        .catch((err) => console.log(err))
       }
     },
     { 
@@ -140,7 +139,6 @@ const popupEditForm = new PopupWithForm('.popup_type_edit',
       })
       .catch((err) => console.log(err))
       .finally(() => popupEditForm.refundTextButton('Сохранить'))
-
     }
   });
 

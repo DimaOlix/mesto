@@ -19,12 +19,13 @@ export default class UserInfo {
   }
 
   setUserInfoLoad(userInfo) {
+    this._userName.id = userInfo._id;
     this._userName.textContent = userInfo.name;
     this._userActivity.textContent = userInfo.about;
     this._fieldUserAvatar.style.backgroundImage  = `url(${userInfo.avatar})`;
   }
 
   setUserAvatar(userAvatar) {
-    this._fieldUserAvatar.style.backgroundImage = `url(${userAvatar.avatar})`;
+    this._fieldUserAvatar.style.backgroundImage = `url(${userAvatar.avatar})`;    
   }
 }
