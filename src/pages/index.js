@@ -45,18 +45,9 @@ Promise.all([apiServerRequest.getUserInfo(), apiServerRequest.getCardsInfo()])
 const addCard = new Section( {
   renderer: (item) => {
     const cardElement = creatureCard(item, 'templateCard');
-    renderCard(cardElement, item);
+    addCard.addItem(cardElement);
   }
 }, '.elements__container');
-
-// выбор добавления карт append/prepend
-function renderCard(card, datacard) {
-  if(datacard.owner._id === userName.id) {
-    addCard.addUserItem(card);
-  } else {
-    addCard.addItem(card);
-  }
-}
 
 // функция создания карточек со слушителями
 function creatureCard(item, selector) {
@@ -155,7 +146,8 @@ const popupAddForm = new PopupWithForm('.popup_type_add',
     apiServerRequest.addCard(inputsValue.place, inputsValue.link)
     .then((res) => {
       popupAddForm.close();
-      addCard.renderCards([res]);
+      const cardElement = creatureCard(res, 'templateCard');
+      addCard.addUserItem(cardElement);
     })
     .catch((err) => console.log(err))
     .finally(() => popupAddForm.refundTextButton('Создать'))
